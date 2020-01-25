@@ -1,10 +1,22 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { AuthSession } from 'expo';
 
 export default function App() {
+
+  const scopesArr = ['user-modify-playback-state','user-read-currently-playing','user-read-playback-state','user-library-modify',
+                   'user-library-read','playlist-read-private','playlist-read-collaborative','playlist-modify-public',
+                   'playlist-modify-private','user-read-recently-played','user-top-read'];
+  
+  const scopes = scopesArr.join(' ');
+
+  
+  
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
+      <TouchableOpacity onPress={getAuthorizationCode}>
+        <Text>Botao</Text>
+      </TouchableOpacity>
     </View>
   );
 }
