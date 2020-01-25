@@ -10,7 +10,28 @@ export default function App() {
   
   const scopes = scopesArr.join(' ');
 
-  
+  const redirectUrl = AuthSession.getRedirectUrl();
+  const clientId = 'fc7dc9a6988248058a464e6000d91988';
+
+  const getAuthorizationCode = async () => {
+    try {
+      const result = await AuthSession.startAsync({
+        authUrl:
+          'https://accounts.spotify.com/authorize' +
+          '?response_type=code' +
+          '&client_id=' +
+          clientId +
+          (scopes ? '&scope=' + encodeURIComponent(scopes) : '') +
+          '&redirect_uri=' +
+          encodeURIComponent(redirectUrl),
+      })
+
+      console.log(result.params.code)
+      
+    } catch (err) {
+      console.error(err)
+    }
+  }
   
   return (
     <View style={styles.container}>
