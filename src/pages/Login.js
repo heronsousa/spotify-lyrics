@@ -1,6 +1,8 @@
 import React from 'react';
 import { StyleSheet, TouchableOpacity, View, Text, Image } from 'react-native';
 
+import getAuthorizationCode from '../services/getAuthorizationCode';
+
 import icon from './Spotify_Icon.png'
 
 export default function Login() {
@@ -8,13 +10,12 @@ export default function Login() {
         <View style={styles.container}>
             <Image source={icon} style={styles.image} />
 
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity style={styles.button} onPress={getAuthorizationCode}>
                 <Text style={styles.buttonText}>FAÇA LOGIN NO SPOTIFY</Text>
             </TouchableOpacity>
         </View>
     );
 }
-
 
 const styles = StyleSheet.create({
     container: {
