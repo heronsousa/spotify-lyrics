@@ -5,13 +5,22 @@ import getAuthorizationCode from '../services/getAuthorizationCode';
 
 import icon from './Spotify_Icon.png'
 
-export default function Login() {
+export default function Login({ navigation }) {
+
+    async function getAuthorization() {
+        const response = await getAuthorizationCode();
+
+        if(response.type === "success"){
+            navigation.navigate('Lyrics');
+        }
+    }
+
     return (
         <View style={styles.container}>
             <Image source={icon} style={styles.image} />
 
-            <TouchableOpacity style={styles.button} onPress={getAuthorizationCode}>
-                <Text style={styles.buttonText}>FAÇA LOGIN NO SPOTIFY</Text>
+            <TouchableOpacity style={styles.button} onPress={getAuthorization}>
+                <Text style={styles.buttonText}>CONECTAR-SE COM O SPOTIFY</Text>
             </TouchableOpacity>
         </View>
     );
