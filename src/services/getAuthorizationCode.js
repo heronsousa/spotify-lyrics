@@ -1,5 +1,5 @@
 import { AuthSession } from 'expo';
-import spotifyCredentials from './spotifyCredentials';
+import credentials from './credentials';
 
 const scopesArr = ['user-modify-playback-state','user-read-currently-playing','user-read-playback-state','user-library-modify',
                    'user-library-read','playlist-read-private','playlist-read-collaborative','playlist-modify-public',
@@ -14,7 +14,7 @@ const getAuthorizationCode = async () => {
         'https://accounts.spotify.com/authorize' +
         '?response_type=code' +
         '&client_id=' +
-        spotifyCredentials.clientId +
+        credentials.spotifyCredentials.clientId +
         (scopes ? '&scope=' + encodeURIComponent(scopes) : '') +
         '&redirect_uri=' +
         encodeURIComponent(redirectUrl),
