@@ -1,25 +1,22 @@
 import React from 'react';
 import { StyleSheet, TouchableOpacity, View, Text, Image } from 'react-native';
 
-import getAuthorizationCode from '../services/getAuthorizationCode';
+import getAcessToken from '../services/getAcessToken';
 
 import icon from './Spotify_Icon.png'
 
 export default function Login({ navigation }) {
 
-    async function getAuthorization() {
-        const response = await getAuthorizationCode();
-
-        if(response.type === "success"){
-            navigation.navigate('Lyrics');
-        }
+    async function getAcess() {
+        const response = await getAcessToken();
+        console.log(response);
     }
 
     return (
         <View style={styles.container}>
             <Image source={icon} style={styles.image} />
 
-            <TouchableOpacity style={styles.button} onPress={getAuthorization}>
+            <TouchableOpacity style={styles.button} onPress={getAcess}>
                 <Text style={styles.buttonText}>CONECTAR-SE COM O SPOTIFY</Text>
             </TouchableOpacity>
         </View>
