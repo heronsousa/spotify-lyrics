@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { StyleSheet, TouchableOpacity, View, Text, Image, AsyncStorage } from 'react-native';
+import React from 'react';
+import { StyleSheet, TouchableOpacity, View, Text, Image } from 'react-native';
 
 import getAuthorizationCode from '../services/getAuthorizationCode';
 import icon from './Spotify_Icon.png'
