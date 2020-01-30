@@ -1,43 +1,26 @@
 import React, { useEffect } from 'react';
 import { StyleSheet, TouchableOpacity, View, Text, Image, AsyncStorage } from 'react-native';
 
-import { refreshTokens } from '../services/getAcessToken';
-
+import getAuthorizationCode from '../services/getAuthorizationCode';
 import icon from './Spotify_Icon.png'
 
 export default function Login({ navigation }) {
 
-    // useEffect(() => {
-    //     async function tokenExpired() {
-            
-            
-    //         // if (!tokenExpirationTime || new Date().getTime() > tokenExpirationTime) {
-    //         //   await refreshTokens();
-    //         // } else {
-    //         //   this.setState({ accessTokenAvailable: true });
-    //         // }
-    //       }
-    // }, []);
+    async function getSpotifyConnection() {
+        const response = await getAuthorizationCode();
 
-    async function getAcess() {
-        await refreshTokens();
+        if(response.type === "success"){
+            await AsyncStorage.setItem('authorizationCode', response.params.code);
 
-        const tokenExpirationTime = await AsyncStorage.getItem('expirationTime', (err, value) => {
-            if (err) {
-                console.log(err)
-            } else {
-                JSON.parse(value)
-            }
-        })
-
-        console.log(tokenExpirationTime);
+            navigation.navigate('Lyrics');
+        }
     }
 
     return (
         <View style={styles.container}>
             <Image source={icon} style={styles.image} />
 
-            <TouchableOpacity style={styles.button} onPress={getAcess}>
+            <TouchableOpacity style={styles.button} onPress={getSpotifyConnection}>
                 <Text style={styles.buttonText}>CONECTAR-SE COM O SPOTIFY</Text>
             </TouchableOpacity>
         </View>

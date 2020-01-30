@@ -1,6 +1,5 @@
 import { AsyncStorage } from 'react-native';
 import { encode as btoa } from 'base-64';
-import getAuthorizationCode from './getAuthorizationCode';
 import credentials from './credentials';
 
 const { spotifyCredentials } = credentials;
@@ -8,8 +7,7 @@ const { spotifyCredentials } = credentials;
 async function getAcessToken() {
 
     try {
-        const responseAuthCode = await getAuthorizationCode();
-        const authorizationCode = responseAuthCode && responseAuthCode.params.code;
+        const authorizationCode = await AsyncStorage.getItem('authorizationCode');
 
         const credsB64 = btoa(`${spotifyCredentials.clientId}:${spotifyCredentials.clientSecret}`);
 
@@ -40,10 +38,8 @@ async function getAcessToken() {
 }
 
 async function refreshTokens() {
-    await getAcessToken();
 
     try {
-
         const credsB64 = btoa(`${spotifyCredentials.clientId}:${spotifyCredentials.clientSecret}`);
         const refreshToken = await AsyncStorage.getItem('refreshToken');
         const response = await fetch('https://accounts.spotify.com/api/token', {
