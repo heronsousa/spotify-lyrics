@@ -1,15 +1,36 @@
-import React from 'react';
-import { StyleSheet, TouchableOpacity, View, Text, Image } from 'react-native';
+import React, { useEffect } from 'react';
+import { StyleSheet, TouchableOpacity, View, Text, Image, AsyncStorage } from 'react-native';
 
-import getAcessToken from '../services/getAcessToken';
+import { refreshTokens } from '../services/getAcessToken';
 
 import icon from './Spotify_Icon.png'
 
 export default function Login({ navigation }) {
 
+    // useEffect(() => {
+    //     async function tokenExpired() {
+            
+            
+    //         // if (!tokenExpirationTime || new Date().getTime() > tokenExpirationTime) {
+    //         //   await refreshTokens();
+    //         // } else {
+    //         //   this.setState({ accessTokenAvailable: true });
+    //         // }
+    //       }
+    // }, []);
+
     async function getAcess() {
-        const response = await getAcessToken();
-        console.log(response);
+        await refreshTokens();
+
+        const tokenExpirationTime = await AsyncStorage.getItem('expirationTime', (err, value) => {
+            if (err) {
+                console.log(err)
+            } else {
+                JSON.parse(value)
+            }
+        })
+
+        console.log(tokenExpirationTime);
     }
 
     return (
