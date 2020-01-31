@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
-import { Text, StyleSheet, TouchableOpacity, View, ScrollView, AsyncStorage } from 'react-native';
+import { Text, StyleSheet, TouchableOpacity, View, ScrollView, AsyncStorage, Image } from 'react-native';
 import SpotifyWebAPI from 'spotify-web-api-js';
 
 import apiseeds from '../services/apiseeds.js';
 import credentials from '../services/credentials.js';
+import { refreshTokens } from '../services/getAcessToken';
+import icon from './Spotify_Icon.png'
 
 export default function Lyrics() {
     const [lyrics, setLyrics] = useState('');
+    const [imageUrl, setImageUrl] = useState('');
 
     async function getCurrentTrack() {
         const tokenExpirationTime = await AsyncStorage.getItem('expirationTime', (err, value) => {
@@ -28,7 +31,8 @@ export default function Lyrics() {
         
         const user = await sp.getMe();
         const music = await sp.getMyCurrentPlayingTrack();
-        console.log(music);
+
+        setImageUrl(music.item?.album?.images[0]?.url);
     }
 
     async function getLyrics() {
@@ -39,7 +43,15 @@ export default function Lyrics() {
 
     return (
         <View style={styles.container}>
-            <TouchableOpacity onPress={getCurrentTrack}>
+
+            <View style={styles.musicInfo}>
+                <Image source={{ uri: imageUrl }} style={styles.musicImage} />
+                <View style={styles.musicStrigs}>
+                    <Text style={styles.musicName}>Nome da musica</Text>
+                    <Text style={styles.musicAuthor}>Nome do artista</Text>
+                </View>
+            </View>
+            <TouchableOpacity onPress={getCurrentTrack} style={styles.lyrics}>
                 <Text>Lyrics</Text>
             </TouchableOpacity>
 
@@ -52,11 +64,36 @@ export default function Lyrics() {
 
 const styles = StyleSheet.create({
     container: {
-        marginTop: 100,
         flex: 1,
-        backgroundColor: '#FFF',
-        alignItems: 'center',
-        justifyContent: 'center',
+        backgroundColor: '#191414',
+        padding: 20
+    },
+
+    musicInfo: {
+        flexDirection: 'row'
+    },
+    
+    musicImage: {
+        width: 100, 
+        height: 100,
+        borderWidth: 2,
+        borderColor: '#fff'
+    },
+
+    musicStrigs: {
+        flexDirection: 'column',
+        marginLeft: 15
+    },
+
+    musicName: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: '#fff'
+    },
+
+    musicAuthor: {
+        fontSize: 18,
+        color: '#fff'
     },
 
     lyrics: {

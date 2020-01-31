@@ -5,18 +5,25 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "eject": "expo eject"
+    "eject": "react-app-rewired eject",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test"
   },
   "dependencies": {
+    "@babel/plugin-proposal-optional-chaining": "^7.8.3",
     "axios": "^0.19.2",
+    "base-64": "^0.1.0",
+    "customize-cra": "^0.9.1",
     "expo": "~36.0.0",
     "react": "~16.9.0",
+    "react-app-rewired": "^2.1.5",
     "react-dom": "~16.9.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-36.0.0.tar.gz",
     "react-native-gesture-handler": "^1.5.3",
     "react-native-web": "~0.11.7",
     "react-navigation": "^4.0.10",
-    "react-navigation-stack": "^2.0.16"
+    "react-navigation-stack": "^2.0.16",
+    "spotify-web-api-js": "^1.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",

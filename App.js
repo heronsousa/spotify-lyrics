@@ -1,10 +1,15 @@
 import React from 'react';
-import { YellowBox } from 'react-native';
+import { YellowBox, StatusBar } from 'react-native';
 
 import Routes from './src/routes';
 
-YellowBox.ignoreWarnings(['Linking requires']);
+YellowBox.ignoreWarnings(['Linking requires that you provide a `scheme`']);
 
 export default function App() {
-  return <Routes />
+  return (
+    <>
+      <Routes />
+      <StatusBar hidden/>
+    </>
+  );
 }
