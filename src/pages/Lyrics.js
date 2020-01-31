@@ -10,6 +10,8 @@ import icon from './Spotify_Icon.png'
 export default function Lyrics() {
     const [lyrics, setLyrics] = useState('');
     const [imageUrl, setImageUrl] = useState('');
+    const [trackName, setTrackName] = useState('');
+    const [trackAuthor, setTrackAuthor] = useState('');
 
     async function getCurrentTrack() {
         const tokenExpirationTime = await AsyncStorage.getItem('expirationTime', (err, value) => {
@@ -29,9 +31,10 @@ export default function Lyrics() {
         const accessToken = await AsyncStorage.getItem('accessToken');
         sp.setAccessToken(accessToken);
         
-        const user = await sp.getMe();
         const music = await sp.getMyCurrentPlayingTrack();
-
+        
+        setTrackAuthor(music.item?.album?.artists[0]?.name);
+        setTrackName(music.item?.album?.name);
         setImageUrl(music.item?.album?.images[0]?.url);
     }
 
@@ -47,8 +50,8 @@ export default function Lyrics() {
             <View style={styles.musicInfo}>
                 <Image source={{ uri: imageUrl }} style={styles.musicImage} />
                 <View style={styles.musicStrigs}>
-                    <Text style={styles.musicName}>Nome da musica</Text>
-                    <Text style={styles.musicAuthor}>Nome do artista</Text>
+                    <Text style={styles.musicName}>{trackName}</Text>
+                    <Text style={styles.musicAuthor}>{trackAuthor}</Text>
                 </View>
             </View>
             <TouchableOpacity onPress={getCurrentTrack} style={styles.lyrics}>
@@ -86,13 +89,13 @@ const styles = StyleSheet.create({
     },
 
     musicName: {
-        fontSize: 20,
+        fontSize: 18,
         fontWeight: 'bold',
         color: '#fff'
     },
 
     musicAuthor: {
-        fontSize: 18,
+        fontSize: 16,
         color: '#fff'
     },
 
