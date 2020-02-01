@@ -10,12 +10,12 @@ export default function Lyrics() {
     const [lyrics, setLyrics] = useState('');
     const [imageUrl, setImageUrl] = useState('');
     const [trackName, setTrackName] = useState('');
-    const [trackAuthor, setTrackAuthor] = useState('');
+    const [trackAuthor, setTrackAuthor] = useState([]);
 
     useEffect(() => {
 
         async function getLyrics() {
-            const response = await apiseeds.get(`${trackAuthor}/${trackName}?apikey=${credentials.apiseedsKey}`);
+            const response = await apiseeds.get(`${trackAuthor[0]}/${trackName}?apikey=${credentials.apiseedsKey}`);
             setLyrics(response.data.result.track.text);
         }
             
@@ -45,7 +45,7 @@ export default function Lyrics() {
         
         const music = await sp.getMyCurrentPlayingTrack();
         
-        setTrackAuthor(music.item?.album?.artists[0]?.name);
+        setTrackAuthor(music.item?.artists.map(artist => artist.name));
         setTrackName(music.item?.name);
         setImageUrl(music.item?.album?.images[0]?.url);
     }
@@ -58,7 +58,7 @@ export default function Lyrics() {
                 <Image source={{ uri: imageUrl }} style={styles.musicImage} />
                 <View style={styles.musicStrigs}>
                     <Text style={styles.musicName}>{trackName}</Text>
-                    <Text style={styles.musicAuthor}>{trackAuthor}</Text>
+                    <Text style={styles.musicAuthor}>{trackAuthor.join(', ')}</Text>
                 </View>
             </View>
             <TouchableOpacity onPress={getCurrentTrack} style={styles.lyrics}>
@@ -76,7 +76,8 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
-        padding: 15
+        padding: 15,
+        paddingBottom: 0
     },
 
     musicInfo: {
