@@ -1,17 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Text, StyleSheet, TouchableOpacity, View, ScrollView, AsyncStorage, Image } from 'react-native';
 import SpotifyWebAPI from 'spotify-web-api-js';
 
 import apiseeds from '../services/apiseeds.js';
 import credentials from '../services/credentials.js';
 import { refreshTokens } from '../services/getAcessToken';
-import icon from './Spotify_Icon.png'
 
 export default function Lyrics() {
     const [lyrics, setLyrics] = useState('');
     const [imageUrl, setImageUrl] = useState('');
     const [trackName, setTrackName] = useState('');
     const [trackAuthor, setTrackAuthor] = useState('');
+
+    useEffect(() => {
+
+        async function getLyrics() {
+            const response = await apiseeds.get(`${trackAuthor}/${trackName}?apikey=${credentials.apiseedsKey}`);
+            setLyrics(response.data.result.track.text);
+        }
+            
+        getLyrics();
+
+            
+    }, [trackName]);
+
 
     async function getCurrentTrack() {
         const tokenExpirationTime = await AsyncStorage.getItem('expirationTime', (err, value) => {
@@ -34,15 +46,10 @@ export default function Lyrics() {
         const music = await sp.getMyCurrentPlayingTrack();
         
         setTrackAuthor(music.item?.album?.artists[0]?.name);
-        setTrackName(music.item?.album?.name);
+        setTrackName(music.item?.name);
         setImageUrl(music.item?.album?.images[0]?.url);
     }
 
-    async function getLyrics() {
-        const response = await apiseeds.get(`Chris Brown/loyal?apikey=${credentials.apiseedsKey}`);
-        
-        setLyrics(response.data.result.track.text);
-    }
 
     return (
         <View style={styles.container}>
@@ -58,7 +65,7 @@ export default function Lyrics() {
                 <Text>Lyrics</Text>
             </TouchableOpacity>
 
-            <ScrollView>
+            <ScrollView showsVerticalScrollIndicator={false}>
                 <Text style={styles.lyrics}>{lyrics}</Text>
             </ScrollView>
         </View>
@@ -68,8 +75,8 @@ export default function Lyrics() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#191414',
-        padding: 20
+        backgroundColor: '#fff',
+        padding: 15
     },
 
     musicInfo: {
@@ -77,30 +84,28 @@ const styles = StyleSheet.create({
     },
     
     musicImage: {
-        width: 100, 
-        height: 100,
+        width: 80, 
+        height: 80,
         borderWidth: 2,
         borderColor: '#fff'
     },
 
     musicStrigs: {
         flexDirection: 'column',
-        marginLeft: 15
+        marginLeft: 10
     },
 
     musicName: {
         fontSize: 18,
-        fontWeight: 'bold',
-        color: '#fff'
+        fontWeight: 'bold'
     },
 
     musicAuthor: {
-        fontSize: 16,
-        color: '#fff'
+        fontSize: 16
     },
 
     lyrics: {
-        padding: 20,
+        marginTop: 10,
         fontSize: 16
     }
 });
