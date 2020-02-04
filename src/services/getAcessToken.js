@@ -53,7 +53,7 @@ async function refreshTokens() {
         const responseJson = await response.json();
 
         if (responseJson.error) {
-            await getTokens();
+            await getAcessToken();
         } else {
             const {
                 access_token: newAccessToken,
