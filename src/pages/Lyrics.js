@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Text, StyleSheet, TouchableOpacity, View, ScrollView, Image } from 'react-native';
+import { 
+    Text, 
+    StyleSheet, 
+    TouchableOpacity, 
+    View, 
+    ScrollView, 
+    Image 
+} from 'react-native';
+import { MaterialIcons } from '@expo/vector-icons';
 
 import spotifyAPI from '../services/spotifyAPI';
 import apiseeds from '../services/apiseeds.js';
@@ -11,59 +19,83 @@ export default function Lyrics() {
     const [imageUrl, setImageUrl] = useState('');
     const [trackName, setTrackName] = useState('');
     const [trackAuthor, setTrackAuthor] = useState([]);
+    const [playButton, setPlayButton] = useState('play-arrow');
 
     useEffect(() => {
-        
-        async function getLyrics() {
-            const response = await apiseeds.get(`${trackAuthor[0]}/${trackName}?apikey=${credentials.apiseedsKey}`);
 
-            setLyrics(response.data.result.track.text);
+        async function getLyrics() {
+            try{
+                const response = await apiseeds.get(`${trackAuthor[0]}/${trackName}?apikey=${credentials.apiseedsKey}`);
+                setLyrics(response.data.result.track.text); 
+            } catch (err) {
+                console.log(err)
+            }
         }
             
         getLyrics();
             
     }, [trackName]);
 
-
     async function getCurrentTrack() {
 
         const currentTrack = await spotifyAPI.get('/me/player/currently-playing');
-
-        console.log(currentTrack);
         
         setTrackAuthor(currentTrack.data?.item?.artists.map(artist => artist.name));
         setTrackName(currentTrack.data?.item?.name);
         setImageUrl(currentTrack.data?.item?.album?.images[0]?.url);
     }
 
-    async function play(){
-        await spotifyAPI.put('/me/player/play');
-    }
-
-    async function pause(){
-        await spotifyAPI.put('/me/player/pause');
+    async function play_pause(){
+        await spotifyAPI.get('/me/player/currently-playing')
+            .then( async (response) => {
+                if(response) {
+                    if(response.data.is_playing) {
+                        await spotifyAPI.put('/me/player/pause');
+                        setPlayButton('play-arrow')
+                    }
+                    else {
+                        await spotifyAPI.put('/me/player/play');
+                        setPlayButton('pause');
+                    }
+                }
+            }
+        );
     }
 
     return (
         <View style={styles.container}>
 
             <View style={styles.musicInfo}>
+                
                 <Image source={ imageUrl ? { uri: imageUrl } : card_default} style={styles.musicImage} />
+                
                 <View style={styles.musicStrigs}>
-                    <Text style={styles.musicName}>{trackName}</Text>
-                    <Text style={styles.musicAuthor}>{trackAuthor.join(', ')}</Text>
+                
+                    <View>
+                        <Text style={styles.musicName}>{trackName}</Text>
+                        <Text style={styles.musicAuthor}>{trackAuthor.join(', ')}</Text>
+                    </View>
+
+                    <View style={styles.musicButtons}>
+                        
+                        <TouchableOpacity onPress={()=>{}}>
+                            <MaterialIcons name="skip-previous" size={35} />
+                        </TouchableOpacity>
+                        
+                        <TouchableOpacity onPress={play_pause}>
+                            <MaterialIcons name={playButton} size={35} />
+                        </TouchableOpacity>
+                        
+                        <TouchableOpacity onPress={()=>{}}>
+                            <MaterialIcons name="skip-next" size={35} />
+                        </TouchableOpacity>
+                        
+                    </View>
                 </View>
             </View>
+            
             <TouchableOpacity onPress={getCurrentTrack} style={styles.lyrics}>
                 <Text>Lyrics</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity onPress={pause} style={styles.lyrics}>
-                <Text>pause</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity onPress={play} style={styles.lyrics}>
-                <Text>play</Text>
             </TouchableOpacity>
 
             <ScrollView showsVerticalScrollIndicator={false}>
@@ -86,25 +118,32 @@ const styles = StyleSheet.create({
     },
     
     musicImage: {
-        width: 80, 
-        height: 80,
+        width: 100, 
+        height: 100,
         borderWidth: 2,
         borderColor: '#fff'
     },
 
     musicStrigs: {
         flexDirection: 'column',
+        justifyContent: 'space-between',
         marginLeft: 10
     },
 
     musicName: {
-        fontSize: 18,
+        fontSize: 16,
         fontWeight: 'bold'
     },
 
     musicAuthor: {
-        fontSize: 16
+        fontSize: 14
     },
+
+    musicButtons: {
+        width: '70%',
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+    },  
 
     lyrics: {
         marginTop: 10,
