@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Text, StyleSheet, TouchableOpacity, View, ScrollView, AsyncStorage, Image } from 'react-native';
-import SpotifyWebAPI from 'spotify-web-api-js';
+import { Text, StyleSheet, TouchableOpacity, View, ScrollView, Image } from 'react-native';
 
 import apiseeds from '../services/apiseeds.js';
 import credentials from '../services/credentials.js';
-import { refreshTokens } from '../services/getAcessToken';
+import spotifyWebApi from '../services/spotifyWebAPI.js';
 
 export default function Lyrics() {
     const [lyrics, setLyrics] = useState('');
@@ -20,29 +19,13 @@ export default function Lyrics() {
         }
             
         getLyrics();
-
             
     }, [trackName]);
 
 
     async function getCurrentTrack() {
-        const tokenExpirationTime = await AsyncStorage.getItem('expirationTime', (err, value) => {
-            if (err) {
-                console.log(err)
-            } else {
-                JSON.parse(value)
-            }
-        })
+        const sp = await spotifyWebApi();
 
-        if (new Date().getTime() > tokenExpirationTime) {
-            await refreshTokens();
-        }
-
-        let sp = new SpotifyWebAPI();
-
-        const accessToken = await AsyncStorage.getItem('accessToken');
-        sp.setAccessToken(accessToken);
-        
         const music = await sp.getMyCurrentPlayingTrack();
         
         setTrackAuthor(music.item?.artists.map(artist => artist.name));
