@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { 
     Text, 
     StyleSheet, 
@@ -20,46 +20,59 @@ export default function Lyrics() {
     const [trackName, setTrackName] = useState('');
     const [trackAuthor, setTrackAuthor] = useState([]);
     const [playButton, setPlayButton] = useState('play-arrow');
-
-    useEffect(() => {
-
-        async function getLyrics() {
-            try{
-                const response = await apiseeds.get(`${trackAuthor[0]}/${trackName}?apikey=${credentials.apiseedsKey}`);
-                setLyrics(response.data.result.track.text); 
-            } catch (err) {
-                console.log(err)
-            }
-        }
-            
-        getLyrics();
-            
-    }, [trackName]);
-
+    
     async function getCurrentTrack() {
-
-        const currentTrack = await spotifyAPI.get('/me/player/currently-playing');
+        try{
+            const currentTrack = await spotifyAPI.get('/currently-playing');
+            
+            setTrackAuthor(currentTrack.data?.item?.artists.map(artist => artist.name));
+            setTrackName(currentTrack.data?.item?.name);
+            setImageUrl(currentTrack.data?.item?.album?.images[0]?.url);
         
-        setTrackAuthor(currentTrack.data?.item?.artists.map(artist => artist.name));
-        setTrackName(currentTrack.data?.item?.name);
-        setImageUrl(currentTrack.data?.item?.album?.images[0]?.url);
+            // const response = await apiseeds.get(`${trackAuthor[0]}/${trackName}?apikey=${credentials.apiseedsKey}`);
+
+            // setLyrics(response.data.result.track.text); 
+
+        } catch (err) {
+            console.log(err);
+
+            setTrackAuthor([]);
+            setTrackName('');
+            setImageUrl('');
+            setLyrics(''); 
+        }
     }
 
-    async function play_pause(){
-        await spotifyAPI.get('/me/player/currently-playing')
+    async function play_pause() {
+        await spotifyAPI.get('/currently-playing')
             .then( async (response) => {
                 if(response) {
                     if(response.data.is_playing) {
-                        await spotifyAPI.put('/me/player/pause');
+                        await spotifyAPI.put('/pause');
                         setPlayButton('play-arrow')
                     }
                     else {
-                        await spotifyAPI.put('/me/player/play');
+                        await spotifyAPI.put('/play');
                         setPlayButton('pause');
                     }
                 }
-            }
-        );
+            });
+    }
+
+    async function nextTrack() {
+        try {
+            await spotifyAPI.post('/next');
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    async function previousTrack() {
+        try {
+            await spotifyAPI.post('/previous');
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     return (
@@ -72,22 +85,22 @@ export default function Lyrics() {
                 <View style={styles.musicStrigs}>
                 
                     <View>
-                        <Text style={styles.musicName}>{trackName}</Text>
-                        <Text style={styles.musicAuthor}>{trackAuthor.join(', ')}</Text>
+                        <Text numberOfLines={1} style={styles.musicName}>{trackName}</Text>
+                        <Text numberOfLines={1} style={styles.musicAuthor}>{trackAuthor.join(', ')}</Text>
                     </View>
 
                     <View style={styles.musicButtons}>
                         
-                        <TouchableOpacity onPress={()=>{}}>
-                            <MaterialIcons name="skip-previous" size={35} />
+                        <TouchableOpacity onPress={previousTrack}>
+                            <MaterialIcons name="skip-previous" size={35} color={'white'} />
                         </TouchableOpacity>
                         
                         <TouchableOpacity onPress={play_pause}>
-                            <MaterialIcons name={playButton} size={35} />
+                            <MaterialIcons name={playButton} size={35} color={'white'} />
                         </TouchableOpacity>
                         
-                        <TouchableOpacity onPress={()=>{}}>
-                            <MaterialIcons name="skip-next" size={35} />
+                        <TouchableOpacity onPress={nextTrack}>
+                            <MaterialIcons name="skip-next" size={35} color={'white'} />
                         </TouchableOpacity>
                         
                     </View>
@@ -98,7 +111,7 @@ export default function Lyrics() {
                 <Text>Lyrics</Text>
             </TouchableOpacity>
 
-            <ScrollView showsVerticalScrollIndicator={false}>
+            <ScrollView showsVerticalScrollIndicator={false} style={{marginBottom: 10}}>
                 <Text style={styles.lyrics}>{lyrics}</Text>
             </ScrollView>
         </View>
@@ -109,12 +122,13 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
-        padding: 15,
         paddingBottom: 0
     },
 
     musicInfo: {
-        flexDirection: 'row'
+        flexDirection: 'row',
+        backgroundColor: '#191414',
+        padding: 15
     },
     
     musicImage: {
@@ -127,26 +141,29 @@ const styles = StyleSheet.create({
     musicStrigs: {
         flexDirection: 'column',
         justifyContent: 'space-between',
-        marginLeft: 10
+        marginLeft: 10,
+        flex: 1
     },
 
     musicName: {
         fontSize: 16,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        color: '#fff'
     },
 
     musicAuthor: {
-        fontSize: 14
+        fontSize: 14,
+        color: '#fff'
     },
 
     musicButtons: {
-        width: '70%',
         flexDirection: 'row',
         justifyContent: 'space-between'
     },  
 
     lyrics: {
-        marginTop: 10,
-        fontSize: 16
+        fontSize: 16,
+        paddingBottom: 0,
+        padding: 15,
     }
 });

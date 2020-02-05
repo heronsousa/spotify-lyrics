@@ -4,7 +4,7 @@ import { AsyncStorage } from 'react-native';
 import { refreshTokens } from './getAcessToken';
 
 const instance = axios.create({
-    baseURL: 'https://api.spotify.com/v1'
+    baseURL: 'https://api.spotify.com/v1/me/player'
 });
 
 instance.interceptors.request.use(
