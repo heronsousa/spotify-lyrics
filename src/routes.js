@@ -2,12 +2,12 @@ import React from 'react';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 
 import Login from './pages/Login';
-import Lyrics from './pages/Lyrics';
+import Track from './pages/Track';
 
 const Routes = createAppContainer(
     createSwitchNavigator({
         Login,
-        Lyrics
+        Track
     })
 );
 

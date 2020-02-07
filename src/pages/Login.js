@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, TouchableOpacity, View, Text, Image, AsyncStorage } from 'react-native';
 
 import getAuthorizationCode from '../services/getAuthorizationCode';
-import icon from './Spotify_Icon.png'
+import icon from '../assets/Spotify_Icon.png'
 
 export default function Login({ navigation }) {
 
@@ -12,7 +12,7 @@ export default function Login({ navigation }) {
         if(response.type === "success"){
             await AsyncStorage.setItem('authorizationCode', response.params.code);
 
-            navigation.navigate('Lyrics');
+            navigation.navigate('Track');
         }
     }
 
@@ -44,14 +44,15 @@ const styles = StyleSheet.create({
     button: {
         height: 50,
         width: 280,
-        backgroundColor: '#191414',
+        borderWidth: 3,
+        borderColor: '#191414',
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 25
     },
 
     buttonText: {
-        color: '#FFFFFF',
+        color: '#191414',
         fontSize: 16,
         fontWeight: 'bold'
     }
