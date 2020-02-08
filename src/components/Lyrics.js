@@ -37,16 +37,16 @@ export default function Lyrics({ lyrics }) {
     return (
         <View style={{backgroundColor: backColor, height: '100%', padding: 10}}>
 
-            <View style={styles.settings}>
+            {/* <View style={styles.settings}>
                 <TouchableOpacity onPress={() => {setSettingsVis( settingsVis ? false : true)}}>
                     <MaterialIcons name="more-vert" size={30} color={'white'} />
                 </TouchableOpacity>
 
                 {settingsVis ? <Settings /> : null}
-            </View>
+            </View> */}
 
-            <ScrollView showsVerticalScrollIndicator={false} style={{ position: 'absolute', padding: 10 }}>
-                <Text style={styles.lyrics, {color: fontColor, fontSize: fontScale}}>asdsadsda</Text>
+            <ScrollView showsVerticalScrollIndicator={false}>
+                <Text style={styles.lyrics, {color: fontColor, fontSize: fontScale}}>{lyrics}</Text>
             </ScrollView>
             
         </View>

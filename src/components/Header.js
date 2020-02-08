@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
     Text,
     TouchableOpacity, 
@@ -12,12 +12,7 @@ import card_default from '../assets/card_default.jpg'
 
 export default function Header({ trackInfo }) {
 
-    // console.log(trackInfo);
-
-    const [imageUrl, setImageUrl] = useState('');
-    const [trackName, setTrackName] = useState('');
-    const [trackAuthor, setTrackAuthor] = useState([]);
-    const [playButton, setPlayButton] = useState('play-arrow');
+    const { imageUrl, trackName, trackAuthor, playButton } = trackInfo;
 
     return (
         <View style={styles.musicInfo}>

@@ -6,7 +6,7 @@ import Track from './pages/Track';
 
 const Routes = createAppContainer(
     createSwitchNavigator({
-        Login,
+        // Login,
         Track
     })
 );
