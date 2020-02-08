@@ -11,8 +11,18 @@ import { MaterialIcons } from '@expo/vector-icons';
 import card_default from '../assets/card_default.jpg'
 
 export default function Header({ trackInfo }) {
+    
+    const [imageUrl, setImageUrl] = useState('');
+    const [trackName, setTrackName] = useState('');
+    const [trackAuthor, setTrackAuthor] = useState([]);
+    const [playButton, setPlayButton] = useState('play-arrow');
 
-    const { imageUrl, trackName, trackAuthor, playButton } = trackInfo;
+    useEffect(()=>{ 
+        setTrackAuthor(trackInfo.author ? trackInfo.author : []);
+        setTrackName(trackInfo.name);
+        setImageUrl(trackInfo.image); 
+        setPlayButton(trackInfo.playButton);
+     });
 
     return (
         <View style={styles.musicInfo}>

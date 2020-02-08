@@ -7,7 +7,6 @@ export default function Lyrics({ lyrics }) {
     const [fontColor, setFontColor] = useState('#191414');
     const [backColor, setBackColor] = useState('white');
     const [fontScale, setFontScale] = useState(16);
-    const [settingsVis, setSettingsVis] = useState(false);
 
     const Settings = () => {
         return(

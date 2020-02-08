@@ -9,17 +9,14 @@ import apiseeds from '../services/apiseeds.js';
 import credentials from '../services/credentials.js';
 
 export default function Track() {
-    const [lyrics, setLyrics] = useState('as');
-    const [imageUrl, setImageUrl] = useState('');
-    const [trackName, setTrackName] = useState('');
-    const [trackAuthor, setTrackAuthor] = useState([]);
+    const [lyrics, setLyrics] = useState(' ');
     const [playButton, setPlayButton] = useState('play-arrow');
     const [trackInfo, setTrackInfo] = useState({});
 
     useEffect(() => {
         async function getLyrics() {
             try{
-                const response = await apiseeds.get(`${trackAuthor}/${trackName}?apikey=${credentials.apiseedsKey}`);
+                const response = await apiseeds.get(`${trackInfo?.author[0]}/${trackInfo?.name}?apikey=${credentials.apiseedsKey}`);
                 setLyrics(response.data.result.track.text);
 
             } catch (err) {
@@ -28,25 +25,23 @@ export default function Track() {
         }
 
         getLyrics();
-    }, [trackName]);
+    }, [trackInfo]);
     
     async function getCurrentTrack() {
         try{
             const currentTrack = await spotifyAPI.get('/currently-playing');
-            
-            setTrackAuthor(currentTrack.data?.item?.artists.map(artist => artist.name));
-            setTrackName(currentTrack.data?.item?.name);
-            setImageUrl(currentTrack.data?.item?.album?.images[0]?.url);
 
-            setTrackInfo({trackName, trackAuthor, imageUrl, playButton});
+            const author = currentTrack.data?.item?.artists.map(artist => artist.name);
+            const name = currentTrack.data?.item?.name;
+            const image = currentTrack.data?.item?.album?.images[0]?.url;
+
+            setTrackInfo({author, name, image, playButton});
 
         } catch (err) {
             console.log(err);
-
-            setTrackAuthor([]);
-            setTrackName('');
-            setImageUrl('');
+            
             setLyrics(''); 
+            setTrackInfo({});
         }
     }
 
