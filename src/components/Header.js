@@ -12,7 +12,7 @@ import card_default from '../assets/card_default.jpg'
 
 export default function Header({ trackInfo }) {
 
-    console.log(trackInfo);
+    // console.log(trackInfo);
 
     const [imageUrl, setImageUrl] = useState('');
     const [trackName, setTrackName] = useState('');
@@ -57,7 +57,10 @@ const styles = StyleSheet.create({
     musicInfo: {
         flexDirection: 'row',
         backgroundColor: '#191414',
-        padding: 15
+        padding: 15,
+        borderWidth: 1,
+        borderTopWidth: 0,
+        borderColor: 'white'
     },
     
     musicImage: {
