@@ -8,6 +8,7 @@ import {
     ScrollView
 } from 'react-native';
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { Linking } from 'expo';
 
 // import Lyrics from '../components/Lyrics';
 // import Header from '../components/Header';
@@ -18,7 +19,7 @@ import vagalumeAPI from '../services/vagalumeAPI.js';
 import credentials from '../services/credentials.js';
 
 export default function Track() {
-    const [lyrics, setLyrics] = useState(' ');
+    const [lyrics, setLyrics] = useState('');
     const [imageUrl, setImageUrl] = useState('');
     const [trackName, setTrackName] = useState('');
     const [trackAuthor, setTrackAuthor] = useState([]);
@@ -122,14 +123,30 @@ export default function Track() {
 
             </View>
 
-            <ScrollView showsVerticalScrollIndicator={false} style={styles.lyrics}>
-                <Text style={{ color: fontColor, fontSize: fontScale }}>{lyrics}</Text>
-            </ScrollView>
+            <View style={styles.container}>
+
+                {lyrics ? 
+                    <ScrollView showsVerticalScrollIndicator={false} style={styles.lyrics}>
+                        <Text style={{ color: fontColor, fontSize: fontScale }}>{lyrics}</Text>
+                    </ScrollView>
+                :    
+                    <TouchableOpacity style={styles.button} onPress={() => (Linking.openURL('spotify:'))}>
+                        <Text style={styles.buttonText}>IR PARA O SPOTIFY</Text>
+                    </TouchableOpacity>
+                }
+
+            </View>
         </>
     );
 }
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+
     musicInfo: {
         flexDirection: 'row',
         backgroundColor: '#191414',
@@ -171,5 +188,21 @@ const styles = StyleSheet.create({
 
     lyrics: {
         padding: 10
+    },
+
+    button: {
+        height: 50,
+        width: 280,
+        borderWidth: 3,
+        borderColor: '#191414',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 25
+    },
+
+    buttonText: {
+        color: '#191414',
+        fontSize: 16,
+        fontWeight: 'bold'
     }
 });
