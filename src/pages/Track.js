@@ -26,6 +26,9 @@ export default function Track() {
     const [playButton, setPlayButton] = useState('play-arrow');
     const [fontColor, setFontColor] = useState('#191414');
     const [fontScale, setFontScale] = useState(16);
+    const [running, setRunning] = useState(false);
+    const [progress, setProgress] = useState(0);
+    const [duration, setDuration] = useState(0);
 
     useEffect(() => {
         async function getLyrics() {
@@ -42,6 +45,12 @@ export default function Track() {
         getLyrics();
     }, [trackName]);
 
+    useEffect(() => {
+        if (running) {
+            setTimeout(() => {getCurrentTrack()}, duration-progress);
+        }
+    },[running]);
+
     async function getCurrentTrack() {
         try {
             const currentTrack = await spotifyAPI.get('/currently-playing');
@@ -50,6 +59,9 @@ export default function Track() {
             setTrackAuthor(currentTrack.data?.item?.artists.map(artist => artist.name));
             setTrackName(currentTrack.data?.item?.name);
             setImageUrl(currentTrack.data?.item?.album?.images[0]?.url);
+            setDuration(currentTrack.data?.item?.duration_ms);
+            setProgress(currentTrack.data?.progress_ms);
+            setRunning(currentTrack.data.is_playing)
 
         } catch (err) {
             console.log(err);
@@ -57,6 +69,8 @@ export default function Track() {
     }
 
     async function play_pause() {
+        getCurrentTrack()
+
         await spotifyAPI.get('/currently-playing')
             .then(async (response) => {
                 if (response) {
@@ -123,19 +137,24 @@ export default function Track() {
 
             </View>
 
-            <View style={styles.container}>
 
-                {lyrics ? 
-                    <ScrollView showsVerticalScrollIndicator={false} style={styles.lyrics}>
-                        <Text style={{ color: fontColor, fontSize: fontScale }}>{lyrics}</Text>
-                    </ScrollView>
-                :    
-                    <TouchableOpacity style={styles.button} onPress={() => (Linking.openURL('spotify:'))}>
-                        <Text style={styles.buttonText}>IR PARA O SPOTIFY</Text>
+            {lyrics ? 
+                <ScrollView showsVerticalScrollIndicator={false} style={styles.lyrics}>
+                    <Text style={{ color: fontColor, fontSize: fontScale }}>{lyrics}</Text>
+                </ScrollView>
+            :    
+                <View style={styles.container}>
+                    <TouchableOpacity 
+                        style={styles.button} 
+                        onPress={() => (
+                            Linking.openURL('spotify:'),
+                            setTimeout(() => {  getCurrentTrack() }, 2000)
+                            )}>
+                        <Text style={styles.buttonText}>ENTRAR NO SPOTIFY</Text>
                     </TouchableOpacity>
-                }
+                </View>
+            }
 
-            </View>
         </>
     );
 }
