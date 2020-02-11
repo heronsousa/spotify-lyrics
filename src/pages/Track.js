@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Text,
-    TouchableOpacity, 
+import {
+    Text,
+    TouchableOpacity,
     View,
     StyleSheet,
     Image,
@@ -23,16 +24,14 @@ export default function Track() {
     const [trackAuthor, setTrackAuthor] = useState([]);
     const [playButton, setPlayButton] = useState('play-arrow');
     const [fontColor, setFontColor] = useState('#191414');
-    const [backColor, setBackColor] = useState('white');
     const [fontScale, setFontScale] = useState(16);
-    const [trackInfo, setTrackInfo] = useState({});
 
     useEffect(() => {
         async function getLyrics() {
-            try{
+            try {
                 const response = await vagalumeAPI.get(`/search.php?apikey=${credentials.vagalumeAPI}&art=${trackAuthor[0]}&mus=${trackName}`);
-                // console.log(response.data.mus[0].text)
-                setLyrics(response.data.mus[0].text);
+
+                setLyrics(response.data?.mus[0]?.text);
 
             } catch (err) {
                 console.log(err);
@@ -41,27 +40,26 @@ export default function Track() {
 
         getLyrics();
     }, [trackName]);
-    
+
     async function getCurrentTrack() {
-        try{
+        try {
             const currentTrack = await spotifyAPI.get('/currently-playing');
 
+            setPlayButton(currentTrack.data.is_playing ? 'pause' : 'play-arrow');
             setTrackAuthor(currentTrack.data?.item?.artists.map(artist => artist.name));
             setTrackName(currentTrack.data?.item?.name);
             setImageUrl(currentTrack.data?.item?.album?.images[0]?.url);
 
         } catch (err) {
             console.log(err);
-            
-            setLyrics(''); 
         }
     }
 
     async function play_pause() {
         await spotifyAPI.get('/currently-playing')
-            .then( async (response) => {
-                if(response) {
-                    if(response.data.is_playing) {
+            .then(async (response) => {
+                if (response) {
+                    if (response.data.is_playing) {
                         await spotifyAPI.put('/pause');
                         setPlayButton('play-arrow')
                     }
@@ -76,6 +74,7 @@ export default function Track() {
     async function nextTrack() {
         try {
             await spotifyAPI.post('/next');
+            getCurrentTrack();
         } catch (error) {
             console.log(error)
         }
@@ -84,6 +83,7 @@ export default function Track() {
     async function previousTrack() {
         try {
             await spotifyAPI.post('/previous');
+            getCurrentTrack();
         } catch (error) {
             console.log(error)
         }
@@ -92,42 +92,38 @@ export default function Track() {
     return (
         <>
             <View style={styles.musicInfo}>
-                
-                <Image source={ imageUrl ? { uri: imageUrl } : card_default} style={styles.musicImage} />
-                
+
+                <Image source={imageUrl ? { uri: imageUrl } : card_default} style={styles.musicImage} />
+
                 <View style={styles.musicStrigs}>
-                
+
                     <View>
                         <Text numberOfLines={1} style={styles.musicName}>{trackName}</Text>
                         <Text numberOfLines={1} style={styles.musicAuthor}>{trackAuthor.join(', ')}</Text>
                     </View>
-    
+
                     <View style={styles.musicButtons}>
-                        
+
                         <TouchableOpacity onPress={previousTrack}>
                             <MaterialIcons name="skip-previous" size={35} color={'white'} />
                         </TouchableOpacity>
-                        
+
                         <TouchableOpacity onPress={play_pause}>
                             <MaterialIcons name={playButton} size={35} color={'white'} />
                         </TouchableOpacity>
-                        
+
                         <TouchableOpacity onPress={nextTrack}>
                             <MaterialIcons name="skip-next" size={35} color={'white'} />
                         </TouchableOpacity>
-                        
+
                     </View>
-    
+
                 </View>
-    
+
             </View>
 
-            <TouchableOpacity onPress={getCurrentTrack}>
-                <Text>Lyrics</Text>
-            </TouchableOpacity>
-
             <ScrollView showsVerticalScrollIndicator={false} style={styles.lyrics}>
-                <Text style={{color: fontColor, fontSize: fontScale}}>{lyrics}</Text>
+                <Text style={{ color: fontColor, fontSize: fontScale }}>{lyrics}</Text>
             </ScrollView>
         </>
     );
@@ -142,9 +138,9 @@ const styles = StyleSheet.create({
         borderTopWidth: 0,
         borderColor: 'white'
     },
-    
+
     musicImage: {
-        width: 100, 
+        width: 100,
         height: 100,
         borderWidth: 2,
         borderColor: '#fff'
@@ -174,7 +170,6 @@ const styles = StyleSheet.create({
     },
 
     lyrics: {
-        paddingBottom: 0,
-        padding: 15
+        padding: 10
     }
 });
