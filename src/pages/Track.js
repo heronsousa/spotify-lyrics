@@ -46,10 +46,8 @@ export default function Track() {
     }, [trackName]);
 
     useEffect(() => {
-        if (running) {
-            setTimeout(() => {getCurrentTrack()}, duration-progress);
-        }
-    },[running]);
+        setTimeout(() => {getCurrentTrack()}, duration-progress);
+    },[progress, duration]);
 
     async function getCurrentTrack() {
         try {
