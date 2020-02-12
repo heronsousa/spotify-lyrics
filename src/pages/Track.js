@@ -35,7 +35,7 @@ export default function Track() {
                 setLyrics(response.data?.mus[0]?.text);
 
             } catch (err) {
-                setLyrics(' ');
+                console.log(err);
             }
         }
 
@@ -63,20 +63,20 @@ export default function Track() {
     }
 
     async function play_pause() {
-        getCurrentTrack()
-
+        
         await spotifyAPI.get('/currently-playing')
-            .then(async (response) => {
-                if (response) {
-                    if (response.data.is_playing) {
-                        await spotifyAPI.put('/pause');
-                        setPlayButton('play-arrow')
-                    }
-                    else {
-                        await spotifyAPI.put('/play');
-                        setPlayButton('pause');
-                    }
+        .then(async (response) => {
+            if (response) {
+                if (response.data.is_playing) {
+                    await spotifyAPI.put('/pause');
+                    setPlayButton('play-arrow')
                 }
+                else {
+                    await spotifyAPI.put('/play');
+                    setPlayButton('pause');
+                }
+                getCurrentTrack()
+            }
             });
     }
 
@@ -108,7 +108,7 @@ export default function Track() {
 
                     <View>
                         <Text numberOfLines={1} style={styles.musicName}>{trackName}</Text>
-                        <Text numberOfLines={1} style={styles.musicAuthor}>{trackAuthor.join(', ')}</Text>
+                        <Text numberOfLines={1} style={styles.musicAuthor}>{trackAuthor ? trackAuthor.join(', ') : ''}</Text>
                     </View>
 
                     <View style={styles.musicButtons}>
@@ -144,7 +144,7 @@ export default function Track() {
                         style={styles.button} 
                         onPress={() => (
                             Linking.openURL('spotify:'),
-                            setTimeout(() => {  getCurrentTrack() }, 2000)
+                            setTimeout(() => {  getCurrentTrack() }, 1)
                             )}>
                         <Text style={styles.buttonText}>ENTRAR NO SPOTIFY</Text>
                     </TouchableOpacity>
@@ -166,9 +166,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         backgroundColor: '#191414',
         padding: 15,
-        borderWidth: 1,
-        borderTopWidth: 0,
-        borderColor: 'white'
+        borderTopWidth: 1,
+        borderBottomColor: 'white'
     },
 
     musicImage: {
