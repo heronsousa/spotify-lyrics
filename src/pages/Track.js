@@ -24,9 +24,6 @@ export default function Track() {
     const [trackName, setTrackName] = useState('');
     const [trackAuthor, setTrackAuthor] = useState([]);
     const [playButton, setPlayButton] = useState('play-arrow');
-    const [fontColor, setFontColor] = useState('#191414');
-    const [fontScale, setFontScale] = useState(16);
-    const [running, setRunning] = useState(false);
     const [progress, setProgress] = useState(0);
     const [duration, setDuration] = useState(0);
 
@@ -38,7 +35,7 @@ export default function Track() {
                 setLyrics(response.data?.mus[0]?.text);
 
             } catch (err) {
-                console.log(err);
+                setLyrics(' ');
             }
         }
 
@@ -47,7 +44,7 @@ export default function Track() {
 
     useEffect(() => {
         setTimeout(() => {getCurrentTrack()}, duration-progress);
-    },[progress, duration]);
+    },[progress]);
 
     async function getCurrentTrack() {
         try {
@@ -59,7 +56,6 @@ export default function Track() {
             setImageUrl(currentTrack.data?.item?.album?.images[0]?.url);
             setDuration(currentTrack.data?.item?.duration_ms);
             setProgress(currentTrack.data?.progress_ms);
-            setRunning(currentTrack.data.is_playing)
 
         } catch (err) {
             console.log(err);
@@ -137,9 +133,11 @@ export default function Track() {
 
 
             {lyrics ? 
-                <ScrollView showsVerticalScrollIndicator={false} style={styles.lyrics}>
-                    <Text style={{ color: fontColor, fontSize: fontScale }}>{lyrics}</Text>
-                </ScrollView>
+                <View style={styles.lyricsContainer}>
+                    <ScrollView showsVerticalScrollIndicator={false}>
+                        <Text style={styles.lyrics}>{lyrics}</Text>
+                    </ScrollView>
+                </View>
             :    
                 <View style={styles.container}>
                     <TouchableOpacity 
@@ -203,8 +201,14 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between'
     },
 
+    lyricsContainer: {
+        flex: 1,
+        padding: 10,
+        paddingBottom: 0
+    },
+
     lyrics: {
-        padding: 10
+        fontSize: 16 
     },
 
     button: {
