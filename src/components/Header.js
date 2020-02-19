@@ -17,9 +17,7 @@ export default function Header({ trackInfo, trackFunctions }) {
     const [trackAuthor, setTrackAuthor] = useState([]);
     const [playButton, setPlayButton] = useState('play-arrow');
 
-    useEffect(()=>{ 
-        console.log(trackInfo);
-        
+    useEffect(()=>{
         setTrackAuthor(trackInfo.artist ? trackInfo.artist : []);
         setTrackName(trackInfo.name);
         setImageUrl(trackInfo.image); 

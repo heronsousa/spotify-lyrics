@@ -1,15 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import {
-    Text,
-    TouchableOpacity,
-    View,
-    StyleSheet,
-    Image,
-    ScrollView
-} from 'react-native';
-import { Linking } from 'expo';
 
-// import Lyrics from '../components/Lyrics';
+import Lyrics from '../components/Lyrics';
 import Header from '../components/Header';
 
 import spotifyAPI from '../services/spotifyAPI';
@@ -18,20 +9,18 @@ import credentials from '../services/credentials.js';
 
 export default function Track() {
     const [lyrics, setLyrics] = useState('');
-    const [imageUrl, setImageUrl] = useState('');
-    const [trackName, setTrackName] = useState('');
-    const [trackAuthor, setTrackAuthor] = useState([]);
-    const [playButton, setPlayButton] = useState('play-arrow');
     const [progress, setProgress] = useState(0);
     const [duration, setDuration] = useState(0);
-    const [trackInfo, setTrackInfo] = useState({artist: [], playButton: '', name: '', image: ''});
+    const [trackInfo, setTrackInfo] = useState({artist: [], playButton: 'play-arrow', name: '', image: ''});
 
     useEffect(() => {
         async function getLyrics() {
             try {
-                const response = await vagalumeAPI.get(`/search.php?apikey=${credentials.vagalumeAPI}&art=${trackAuthor[0]}&mus=${trackName}`);
-
-                setLyrics(response.data?.mus[0]?.text);
+                const response = await vagalumeAPI.get(`/search.php?apikey=${credentials.vagalumeAPI}&art=${trackInfo.artist[0]}&mus=${trackInfo.name}`);
+                
+                setLyrics(response.data.type == 'song_notfound' ? 
+                            'Letra não encontrada. =(' :
+                            response.data?.mus[0]?.text);
 
             } catch (err) { 
                 console.log(err);
@@ -39,7 +28,7 @@ export default function Track() {
         }
 
         getLyrics();
-    }, [trackName]);
+    }, [trackInfo]);
 
     useEffect(() => {
         setTimeout(() => {getCurrentTrack()}, duration-progress);
@@ -64,17 +53,14 @@ export default function Track() {
     }
 
     async function play_pause() {
-        
         await spotifyAPI.get('/currently-playing')
         .then(async (response) => {
             if (response) {
                 if (response.data.is_playing) {
                     await spotifyAPI.put('/pause');
-                    setPlayButton('play-arrow')
                 }
                 else {
                     await spotifyAPI.put('/play');
-                    setPlayButton('pause');
                 }
                 getCurrentTrack()
             }
@@ -101,63 +87,12 @@ export default function Track() {
 
     return (
         <>
-            <Header trackInfo={trackInfo} trackFunctions={{play_pause, nextTrack, previousTrack}}/>
+            <Header 
+                trackInfo={trackInfo} 
+                trackFunctions={{play_pause, nextTrack, previousTrack}}
+            />
 
-            {lyrics ? 
-                <View style={styles.lyricsContainer}>
-                    <ScrollView showsVerticalScrollIndicator={false}>
-                        <Text style={styles.lyrics}>{lyrics}</Text>
-                    </ScrollView>
-                </View>
-            :    
-                <View style={styles.container}>
-                    <TouchableOpacity 
-                        style={styles.button} 
-                        onPress={() => (
-                            Linking.openURL('spotify:'),
-                            setTimeout(() => {  getCurrentTrack() }, 1)
-                            )
-                        }
-                    >
-                        <Text style={styles.buttonText}>ENTRAR NO SPOTIFY</Text>
-                    </TouchableOpacity>
-                </View>
-            }
-
+            <Lyrics lyrics={lyrics} getCurrentTrack={getCurrentTrack}/>
         </>
     );
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-
-    lyricsContainer: {
-        flex: 1,
-        padding: 10,
-        paddingBottom: 0
-    },
-
-    lyrics: {
-        fontSize: 16 
-    },
-
-    button: {
-        height: 50,
-        width: 280,
-        borderWidth: 3,
-        borderColor: '#191414',
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 25
-    },
-
-    buttonText: {
-        color: '#191414',
-        fontSize: 16,
-        fontWeight: 'bold'
-    }
-});

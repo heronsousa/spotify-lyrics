@@ -1,66 +1,71 @@
-import React, { useState } from 'react';
-import { Text, StyleSheet, ScrollView, View, TouchableOpacity    } from 'react-native';
-import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
+import React, { useState, useEffect } from 'react';
+import { 
+    Text, 
+    StyleSheet, 
+    ScrollView, 
+    View, 
+    TouchableOpacity 
+} from 'react-native';
+import { Linking } from 'expo';
 
-export default function Lyrics({ lyrics }) {
-
-    const [fontColor, setFontColor] = useState('#191414');
-    const [backColor, setBackColor] = useState('white');
-    const [fontScale, setFontScale] = useState(16);
-
-    const Settings = () => {
-        return(
-            <>
-                <TouchableOpacity onPress={()=>{
-                    setFontColor(fontColor=='white' ? '#191414' : 'white')
-                    setBackColor(backColor=='white' ? '#191414' : 'white')
-                }}>
-                    <MaterialIcons name="brightness-4" size={30} color={'white'} />
-                </TouchableOpacity>
-        
-                <TouchableOpacity onPress={()=>{
-                    setFontScale(fontScale + 1)
-                }}>
-                    <MaterialCommunityIcons name="format-font-size-increase" size={30} color={'white'} />
-                </TouchableOpacity>
-        
-                <TouchableOpacity onPress={()=>{
-                    setFontScale(fontScale - (fontScale>10 ? 1 : 0))
-                }}>
-                    <MaterialCommunityIcons name="format-font-size-decrease" size={30} color={'white'} />
-                </TouchableOpacity>
-            </>
-        );
-    }
+export default function Lyrics({ lyrics, getCurrentTrack }) {
 
     return (
-        <View style={{backgroundColor: backColor, height: '100%', padding: 10}}>
-
-            {/* <View style={styles.settings}>
-                <TouchableOpacity onPress={() => {setSettingsVis( settingsVis ? false : true)}}>
-                    <MaterialIcons name="more-vert" size={30} color={'white'} />
-                </TouchableOpacity>
-
-                {settingsVis ? <Settings /> : null}
-            </View> */}
-
-            <ScrollView showsVerticalScrollIndicator={false}>
-                <Text style={styles.lyrics, {color: fontColor, fontSize: fontScale}}>{lyrics}</Text>
-            </ScrollView>
-            
-        </View>
+        <>
+            {lyrics ?
+                <View style={styles.lyricsContainer}>
+                    <ScrollView showsVerticalScrollIndicator={false}>
+                        <Text style={styles.lyrics}>{lyrics}</Text>
+                    </ScrollView>
+                </View>
+             : 
+                <View style={styles.container}>
+                    <TouchableOpacity 
+                        style={styles.button} 
+                        onPress={() => (
+                            Linking.openURL('spotify:'),
+                            setTimeout(() => { getCurrentTrack() }, 1)
+                            )
+                        }
+                    >
+                        <Text style={styles.buttonText}>ENTRAR NO SPOTIFY</Text>
+                    </TouchableOpacity>
+                </View> 
+            }
+        </>
   );
 }
 
 const styles = StyleSheet.create({
-    settings: {
-        alignSelf: 'flex-end',
-        backgroundColor: '#666',
-        borderRadius: 5
+    container: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
     },
-    
+
+    lyricsContainer: {
+        flex: 1,
+        padding: 10,
+        paddingBottom: 0
+    },
+
     lyrics: {
-        paddingBottom: 0,
-        padding: 15
+        fontSize: 16 
+    },
+
+    button: {
+        height: 50,
+        width: 280,
+        borderWidth: 3,
+        borderColor: '#191414',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 25
+    },
+
+    buttonText: {
+        color: '#191414',
+        fontSize: 16,
+        fontWeight: 'bold'
     }
 });
