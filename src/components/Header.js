@@ -11,29 +11,17 @@ import { MaterialIcons } from '@expo/vector-icons';
 import card_default from '../assets/card_default.jpg'
 
 export default function Header({ trackInfo, trackFunctions }) {
-    
-    const [imageUrl, setImageUrl] = useState('');
-    const [trackName, setTrackName] = useState('');
-    const [trackAuthor, setTrackAuthor] = useState([]);
-    const [playButton, setPlayButton] = useState('play-arrow');
-
-    useEffect(()=>{
-        setTrackAuthor(trackInfo.artist ? trackInfo.artist : []);
-        setTrackName(trackInfo.name);
-        setImageUrl(trackInfo.image); 
-        setPlayButton(trackInfo.playButton);
-     });
 
     return (
         <View style={styles.musicInfo}>
 
-            <Image source={imageUrl ? { uri: imageUrl } : card_default} style={styles.musicImage} />
+            <Image source={trackInfo.image ? { uri: trackInfo.image } : card_default} style={styles.musicImage} />
 
             <View style={styles.musicStrigs}>
 
                 <View>
-                    <Text numberOfLines={1} style={styles.musicName}>{trackName}</Text>
-                    <Text numberOfLines={1} style={styles.musicAuthor}>{trackAuthor ? trackAuthor.join(', ') : ''}</Text>
+                    <Text numberOfLines={1} style={styles.musicName}>{trackInfo.name}</Text>
+                    <Text numberOfLines={1} style={styles.musicAuthor}>{trackInfo.artist ? trackInfo.artist.join(', ') : ''}</Text>
                 </View>
 
                 <View style={styles.musicButtons}>
@@ -43,7 +31,7 @@ export default function Header({ trackInfo, trackFunctions }) {
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={trackFunctions.play_pause}>
-                        <MaterialIcons name={playButton} size={35} color={'white'} />
+                        <MaterialIcons name={trackInfo.playButton} size={35} color={'white'} />
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={trackFunctions.nextTrack}>
