@@ -7,13 +7,11 @@ import {
     Image,
     ScrollView
 } from 'react-native';
-import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { Linking } from 'expo';
 
 // import Lyrics from '../components/Lyrics';
-// import Header from '../components/Header';
+import Header from '../components/Header';
 
-import card_default from '../assets/card_default.jpg'
 import spotifyAPI from '../services/spotifyAPI';
 import vagalumeAPI from '../services/vagalumeAPI.js';
 import credentials from '../services/credentials.js';
@@ -26,6 +24,7 @@ export default function Track() {
     const [playButton, setPlayButton] = useState('play-arrow');
     const [progress, setProgress] = useState(0);
     const [duration, setDuration] = useState(0);
+    const [trackInfo, setTrackInfo] = useState({artist: [], playButton: '', name: '', image: ''});
 
     useEffect(() => {
         async function getLyrics() {
@@ -34,7 +33,7 @@ export default function Track() {
 
                 setLyrics(response.data?.mus[0]?.text);
 
-            } catch (err) {
+            } catch (err) { 
                 console.log(err);
             }
         }
@@ -50,10 +49,12 @@ export default function Track() {
         try {
             const currentTrack = await spotifyAPI.get('/currently-playing');
 
-            setPlayButton(currentTrack.data.is_playing ? 'pause' : 'play-arrow');
-            setTrackAuthor(currentTrack.data?.item?.artists.map(artist => artist.name));
-            setTrackName(currentTrack.data?.item?.name);
-            setImageUrl(currentTrack.data?.item?.album?.images[0]?.url);
+            const artist = currentTrack.data?.item?.artists.map(artist => artist.name);
+            const playButton = currentTrack.data.is_playing ? 'pause' : 'play-arrow';
+            const name = currentTrack.data?.item?.name;
+            const image = currentTrack.data?.item?.album?.images[0]?.url;
+            
+            setTrackInfo({artist, playButton, name, image});            
             setDuration(currentTrack.data?.item?.duration_ms);
             setProgress(currentTrack.data?.progress_ms);
 
@@ -100,37 +101,7 @@ export default function Track() {
 
     return (
         <>
-            <View style={styles.musicInfo}>
-
-                <Image source={imageUrl ? { uri: imageUrl } : card_default} style={styles.musicImage} />
-
-                <View style={styles.musicStrigs}>
-
-                    <View>
-                        <Text numberOfLines={1} style={styles.musicName}>{trackName}</Text>
-                        <Text numberOfLines={1} style={styles.musicAuthor}>{trackAuthor ? trackAuthor.join(', ') : ''}</Text>
-                    </View>
-
-                    <View style={styles.musicButtons}>
-
-                        <TouchableOpacity onPress={previousTrack}>
-                            <MaterialIcons name="skip-previous" size={35} color={'white'} />
-                        </TouchableOpacity>
-
-                        <TouchableOpacity onPress={play_pause}>
-                            <MaterialIcons name={playButton} size={35} color={'white'} />
-                        </TouchableOpacity>
-
-                        <TouchableOpacity onPress={nextTrack}>
-                            <MaterialIcons name="skip-next" size={35} color={'white'} />
-                        </TouchableOpacity>
-
-                    </View>
-
-                </View>
-
-            </View>
-
+            <Header trackInfo={trackInfo} trackFunctions={{play_pause, nextTrack, previousTrack}}/>
 
             {lyrics ? 
                 <View style={styles.lyricsContainer}>
@@ -145,7 +116,9 @@ export default function Track() {
                         onPress={() => (
                             Linking.openURL('spotify:'),
                             setTimeout(() => {  getCurrentTrack() }, 1)
-                            )}>
+                            )
+                        }
+                    >
                         <Text style={styles.buttonText}>ENTRAR NO SPOTIFY</Text>
                     </TouchableOpacity>
                 </View>
@@ -160,44 +133,6 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-    },
-
-    musicInfo: {
-        flexDirection: 'row',
-        backgroundColor: '#191414',
-        padding: 15,
-        borderTopWidth: 1,
-        borderBottomColor: 'white'
-    },
-
-    musicImage: {
-        width: 100,
-        height: 100,
-        borderWidth: 2,
-        borderColor: '#fff'
-    },
-
-    musicStrigs: {
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-        marginLeft: 10,
-        flex: 1
-    },
-
-    musicName: {
-        fontSize: 16,
-        fontWeight: 'bold',
-        color: '#fff'
-    },
-
-    musicAuthor: {
-        fontSize: 14,
-        color: '#fff'
-    },
-
-    musicButtons: {
-        flexDirection: 'row',
-        justifyContent: 'space-between'
     },
 
     lyricsContainer: {

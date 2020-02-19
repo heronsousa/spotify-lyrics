@@ -10,7 +10,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 import card_default from '../assets/card_default.jpg'
 
-export default function Header({ trackInfo }) {
+export default function Header({ trackInfo, trackFunctions }) {
     
     const [imageUrl, setImageUrl] = useState('');
     const [trackName, setTrackName] = useState('');
@@ -18,7 +18,9 @@ export default function Header({ trackInfo }) {
     const [playButton, setPlayButton] = useState('play-arrow');
 
     useEffect(()=>{ 
-        setTrackAuthor(trackInfo.author ? trackInfo.author : []);
+        console.log(trackInfo);
+        
+        setTrackAuthor(trackInfo.artist ? trackInfo.artist : []);
         setTrackName(trackInfo.name);
         setImageUrl(trackInfo.image); 
         setPlayButton(trackInfo.playButton);
@@ -26,30 +28,30 @@ export default function Header({ trackInfo }) {
 
     return (
         <View style={styles.musicInfo}>
-                
-            <Image source={ imageUrl ? { uri: imageUrl } : card_default} style={styles.musicImage} />
-            
+
+            <Image source={imageUrl ? { uri: imageUrl } : card_default} style={styles.musicImage} />
+
             <View style={styles.musicStrigs}>
-            
+
                 <View>
                     <Text numberOfLines={1} style={styles.musicName}>{trackName}</Text>
-                    <Text numberOfLines={1} style={styles.musicAuthor}>{trackAuthor.join(', ')}</Text>
+                    <Text numberOfLines={1} style={styles.musicAuthor}>{trackAuthor ? trackAuthor.join(', ') : ''}</Text>
                 </View>
 
                 <View style={styles.musicButtons}>
-                    
-                    <TouchableOpacity onPress={()=>{}}>
+
+                    <TouchableOpacity onPress={trackFunctions.previousTrack}>
                         <MaterialIcons name="skip-previous" size={35} color={'white'} />
                     </TouchableOpacity>
-                    
-                    <TouchableOpacity onPress={()=>{}}>
+
+                    <TouchableOpacity onPress={trackFunctions.play_pause}>
                         <MaterialIcons name={playButton} size={35} color={'white'} />
                     </TouchableOpacity>
-                    
-                    <TouchableOpacity onPress={()=>{}}>
+
+                    <TouchableOpacity onPress={trackFunctions.nextTrack}>
                         <MaterialIcons name="skip-next" size={35} color={'white'} />
                     </TouchableOpacity>
-                    
+
                 </View>
 
             </View>
@@ -63,13 +65,12 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         backgroundColor: '#191414',
         padding: 15,
-        borderWidth: 1,
-        borderTopWidth: 0,
-        borderColor: 'white'
+        borderTopWidth: 1,
+        borderBottomColor: 'white'
     },
-    
+
     musicImage: {
-        width: 100, 
+        width: 100,
         height: 100,
         borderWidth: 2,
         borderColor: '#fff'
@@ -96,5 +97,7 @@ const styles = StyleSheet.create({
     musicButtons: {
         flexDirection: 'row',
         justifyContent: 'space-between'
-    },
+    }
 });
+
+
