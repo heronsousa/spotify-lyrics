@@ -14,7 +14,7 @@ export default function Track() {
     const [trackInfo, setTrackInfo] = useState({artist: [], playButton: 'play-arrow', name: '', image: ''});
 
     useEffect(() => {
-        async function getLyrics() {
+        async function getLyrics() { 
             try {
                 const response = await vagalumeAPI.get(`/search.php?apikey=${credentials.vagalumeAPI}&art=${trackInfo.artist[0]}&mus=${trackInfo.name}`);
                 
@@ -31,7 +31,7 @@ export default function Track() {
     }, [trackInfo]);
 
     useEffect(() => {
-        setTimeout(() => {getCurrentTrack()}, duration-progress);
+        setTimeout(() => { getCurrentTrack() }, duration-progress);
     },[progress]);
 
     async function getCurrentTrack() {
