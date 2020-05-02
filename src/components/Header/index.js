@@ -3,12 +3,11 @@ import {
     Text,
     TouchableOpacity, 
     View,
-    StyleSheet,
     Image 
 } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 
-import card_default from '../assets/card_default.jpg'
+import card_default from '../../assets/card_default.jpg'
 import styles from './styles';
 
 export default function Header({ trackInfo, trackFunctions }) {

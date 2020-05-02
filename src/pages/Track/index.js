@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 
-import Lyrics from '../components/Lyrics';
-import Header from '../components/Header';
+import Lyrics from '../../components/Lyrics';
+import Header from '../../components/Header';
 
-import spotifyAPI from '../services/spotifyAPI';
-import vagalumeAPI from '../services/vagalumeAPI.js';
-import credentials from '../services/credentials.js';
+import spotifyAPI from '../../services/spotifyAPI';
+import vagalumeAPI from '../../services/vagalumeAPI.js';
+import credentials from '../../services/credentials.js';
 
 export default function Track() {
     const [lyrics, setLyrics] = useState('');

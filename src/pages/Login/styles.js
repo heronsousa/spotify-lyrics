@@ -3,18 +3,15 @@ import { StyleSheet } from 'react-native';
 export default StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
     },
 
-    lyricsContainer: {
-        flex: 1,
-        padding: 10,
-        paddingBottom: 0
-    },
-
-    lyrics: {
-        fontSize: 16 
+    image: {
+        height: 80,
+        width: 80,
+        marginBottom: 50
     },
 
     button: {
