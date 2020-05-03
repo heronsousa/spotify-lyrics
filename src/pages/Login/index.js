@@ -28,7 +28,7 @@ export default function Login({ navigation }) {
             <Image source={icon} style={styles.image} />
 
             <TouchableOpacity style={styles.button} onPress={getSpotifyConnection}>
-                <Text style={styles.buttonText}>CONECTAR-SE COM O SPOTIFY</Text>
+                <Text style={styles.buttonText}>CONECTAR COM O SPOTIFY</Text>
             </TouchableOpacity>
         </View>
     );

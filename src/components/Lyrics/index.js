@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import { 
     Text,
     ScrollView, 
@@ -9,7 +10,9 @@ import { Linking } from 'expo';
 
 import styles from './styles';
 
-export default function Lyrics({ lyrics, getCurrentTrack }) {
+export default function Lyrics({ getCurrentTrack, lyrics }) {
+
+    // const lyrics = useSelector(state => state.track.data);
 
     return (
         <>

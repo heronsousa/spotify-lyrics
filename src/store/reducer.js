@@ -1,12 +1,16 @@
 const INITIAL_STATE = {
-    data: {}
+    data: {
+        artist: [], 
+        playButton: 'play-arrow', 
+        name: '', 
+        image: ''
+    }
 }
 
 export default function track(state = INITIAL_STATE, action) {
 
     switch (action.type) {
         case 'GET_CURRENT_TRACK':
-            console.log(action.data)
             return { data: action.data }
         
         default:
