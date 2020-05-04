@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Provider } from 'react-redux';
 
 import Lyrics from '../../components/Lyrics';
@@ -8,12 +8,8 @@ import store from '../../store';
 
 export default function Track() {
 
-    // useEffect(() => {
-    //     setTimeout(() => { getCurrentTrack() }, duration-progress);
-    // },[progress]);
-
     return (
-        <Provider store={store} >
+        <Provider store={store}>
             <Header/>
             <Lyrics/>
         </Provider>

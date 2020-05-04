@@ -10,15 +10,25 @@ function* getCurrentTrack() {
         const playButton = currentTrack.data.is_playing ? 'pause' : 'play-arrow';
         const name = currentTrack.data?.item?.name;
         const image = currentTrack.data?.item?.album?.images[0]?.url;
-        
-        yield put({ type: 'GET_CURRENT_TRACK', data: { artist, playButton, name, image } });
+        const duration = currentTrack.data?.item?.duration_ms;
+        const progress = currentTrack.data?.progress_ms;
+
+        yield put({ 
+                    type: 'GET_CURRENT_TRACK', 
+                    data: { 
+                        artist, 
+                        playButton, 
+                        name, 
+                        image,
+                        duration,
+                        progress
+                    }
+                });
     } catch (err) {
         console.log(err);
-        // yield put({ type: 'GET_CURRENT_TRACK', data: 'MUSICA DAORA' });
     }
 }
 
-        
 export default function* root() {
     yield all([
         takeLatest('REQUEST_CURRENT_TRACK', getCurrentTrack),

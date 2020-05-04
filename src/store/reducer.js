@@ -3,7 +3,9 @@ const INITIAL_STATE = {
         artist: [], 
         playButton: 'play-arrow', 
         name: '', 
-        image: ''
+        image: '',
+        duration: 0,
+        progress: 0
     }
 }
 

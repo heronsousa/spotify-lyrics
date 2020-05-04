@@ -17,10 +17,17 @@ export default function Header() {
     
     const dispatch = useDispatch();
     const currentTrack = useSelector(state => state.track.data);
-    
+
     function getCurrentTrack() {
         dispatch(requestCurrentTrack({type: 'REQUEST_CURRENT_TRACK'}));
     }
+
+    useEffect(() => {
+        setTimeout(
+            () => { getCurrentTrack() }, 
+            currentTrack.duration-currentTrack.progress
+        );
+    },[currentTrack]);
 
     async function play_pause() {
         await spotifyAPI.get('/currently-playing')
