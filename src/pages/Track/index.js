@@ -5,8 +5,6 @@ import Lyrics from '../../components/Lyrics';
 import Header from '../../components/Header';
 
 import store from '../../store';
-import spotifyAPI from '../../services/spotifyAPI';
-import vagalumeAPI from '../../services/vagalumeAPI.js';
 
 export default function Track() {
 
@@ -17,8 +15,7 @@ export default function Track() {
     return (
         <Provider store={store} >
             <Header/>
-
-            <Lyrics lyrics='asd' getCurrentTrack={() => {}}/>
+            <Lyrics/>
         </Provider>
     );
 }

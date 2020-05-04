@@ -1,5 +1,5 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { 
     Text,
     ScrollView, 
@@ -10,9 +10,35 @@ import { Linking } from 'expo';
 
 import styles from './styles';
 
-export default function Lyrics({ getCurrentTrack, lyrics }) {
+import { requestCurrentTrack } from '../../store/actions';
+import credentials from '../../services/credentials.js';
+import vagalumeAPI from '../../services/vagalumeAPI.js';
 
-    // const lyrics = useSelector(state => state.track.data);
+export default function Lyrics() {
+
+    const [lyrics, setLyrics] = useState('');
+
+    const dispatch = useDispatch();
+    const currentTrack = useSelector(state => state.track.data);
+
+    
+    function getCurrentTrack() {
+        dispatch(requestCurrentTrack({type: 'REQUEST_CURRENT_TRACK'}));
+    }
+    
+    async function getLyrics() { 
+        try {
+            const response = await vagalumeAPI.get(`/search.php?apikey=${credentials.vagalumeAPI}&art=${currentTrack.artist[0]}&mus=${currentTrack.name}`);
+
+            setLyrics(response.data.type == 'notfound' ? 'Letra não encontrada. =(' : response.data?.mus[0]?.text);
+
+        } catch (err) { 
+            console.log(err);
+        }
+    }
+
+    if (currentTrack.name) 
+        getLyrics();
 
     return (
         <>
