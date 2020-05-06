@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { 
     Text,
@@ -9,9 +9,10 @@ import {
 import { MaterialIcons } from '@expo/vector-icons';
 
 import { requestCurrentTrack } from '../../store/actions';
+import spotifyAPI from '../../services/api/spotifyAPI';
+
 import card_default from '../../assets/card_default.jpg'
 import styles from './styles';
-import spotifyAPI from '../../services/spotifyAPI';
 
 export default function Header() {
     
@@ -34,10 +35,12 @@ export default function Header() {
             .then(async (response) => {
                 if (response) {
                     if (response.data.is_playing) {
-                        await spotifyAPI.put('/pause');
+                        await spotifyAPI.put('/pause')
+                            .catch(err => console.error(err));
                     }
                     else {
-                        await spotifyAPI.put('/play');
+                        await spotifyAPI.put('/play')
+                            .catch(err => console.error(err));
                     }
                     getCurrentTrack()
                 }
@@ -45,21 +48,15 @@ export default function Header() {
     }
 
     async function nextTrack() {
-        try {
-            await spotifyAPI.post('/next');
-            getCurrentTrack();
-        } catch (error) {
-            console.log(error)
-        }
+        await spotifyAPI.post('/next')
+            .then(getCurrentTrack)
+            .catch(err => console.error(err));
     }
 
     async function previousTrack() {
-        try {
-            await spotifyAPI.post('/previous');
-            getCurrentTrack();
-        } catch (error) {
-            console.log(error)
-        }
+        await spotifyAPI.post('/previous')
+            .then(getCurrentTrack)
+            .catch(err => console.error(err));
     }
 
     return (

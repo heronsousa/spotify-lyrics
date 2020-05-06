@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { AsyncStorage } from 'react-native';
 
-import { refreshTokens } from './getAcessToken';
+import { refreshTokens } from '../auth/getAcessToken';
 
 const instance = axios.create({
     baseURL: 'https://api.spotify.com/v1/me/player'

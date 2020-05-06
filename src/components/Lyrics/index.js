@@ -12,7 +12,7 @@ import styles from './styles';
 
 import { requestCurrentTrack } from '../../store/actions';
 import credentials from '../../services/credentials.js';
-import vagalumeAPI from '../../services/vagalumeAPI.js';
+import vagalumeAPI from '../../services/api/vagalumeAPI.js';
 
 export default function Lyrics() {
 
@@ -21,16 +21,16 @@ export default function Lyrics() {
     const dispatch = useDispatch();
     const currentTrack = useSelector(state => state.track.data);
 
-    
     function getCurrentTrack() {
         dispatch(requestCurrentTrack({type: 'REQUEST_CURRENT_TRACK'}));
     }
-    
+
     async function getLyrics() { 
         try {
             const response = await vagalumeAPI.get(`/search.php?apikey=${credentials.vagalumeAPI}&art=${currentTrack.artist[0]}&mus=${currentTrack.name}`);
 
-            setLyrics(response.data.type == 'notfound' ? 'Letra não encontrada. =(' : response.data?.mus[0]?.text);
+            const type = response.data.type;
+            setLyrics(type.includes('notfound') ? 'Letra não encontrada. =(' : response.data?.mus[0]?.text);
 
         } catch (err) { 
             console.log(err);

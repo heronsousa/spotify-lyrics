@@ -1,6 +1,6 @@
 import { AsyncStorage } from 'react-native';
 import { encode as btoa } from 'base-64';
-import credentials from './credentials';
+import credentials from '../credentials';
 
 const { spotifyCredentials } = credentials;
 

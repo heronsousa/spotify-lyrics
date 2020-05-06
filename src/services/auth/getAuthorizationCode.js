@@ -1,5 +1,5 @@
 import { AuthSession } from 'expo';
-import credentials from './credentials';
+import credentials from '../credentials';
 
 const { spotifyCredentials } = credentials;
 

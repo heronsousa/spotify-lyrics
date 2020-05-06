@@ -7,7 +7,7 @@ import {
     AsyncStorage 
 } from 'react-native';
 
-import getAuthorizationCode from '../../services/getAuthorizationCode';
+import getAuthorizationCode from '../../services/auth/getAuthorizationCode';
 import icon from '../../assets/Spotify_Icon.png'
 import styles from './styles';
 

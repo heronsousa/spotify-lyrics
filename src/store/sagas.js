@@ -1,6 +1,6 @@
 import { put, call, all, takeLatest } from 'redux-saga/effects';
 
-import spotifyAPI from '../services/spotifyAPI';
+import spotifyAPI from '../services/api/spotifyAPI';
 
 function* getCurrentTrack() {
     try {
