@@ -10,7 +10,7 @@ import { Linking } from 'expo';
 
 import styles from './styles';
 
-import { requestCurrentTrack } from '../../store/actions';
+import { requestCurrentTrack } from '../../store/actions/track';
 import credentials from '../../services/credentials.js';
 import vagalumeAPI from '../../services/api/vagalumeAPI.js';
 

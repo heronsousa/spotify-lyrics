@@ -1,8 +1,8 @@
-import { put, call, all, takeLatest } from 'redux-saga/effects';
+import { put, call } from 'redux-saga/effects';
 
-import spotifyAPI from '../services/api/spotifyAPI';
+import spotifyAPI from '../../services/api/spotifyAPI';
 
-function* getCurrentTrack() {
+export function* getCurrentTrack() {
     try {
         const currentTrack = yield call(spotifyAPI.get, '/currently-playing');
 
@@ -13,8 +13,7 @@ function* getCurrentTrack() {
         const duration = currentTrack.data?.item?.duration_ms;
         const progress = currentTrack.data?.progress_ms;
 
-        yield put({ 
-                    type: 'GET_CURRENT_TRACK', 
+        yield put({ type: 'GET_CURRENT_TRACK', 
                     data: { 
                         artist, 
                         playButton, 
@@ -27,10 +26,4 @@ function* getCurrentTrack() {
     } catch (err) {
         console.log(err);
     }
-}
-
-export default function* root() {
-    yield all([
-        takeLatest('REQUEST_CURRENT_TRACK', getCurrentTrack),
-    ]);
 }

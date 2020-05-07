@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 
-import { requestCurrentTrack } from '../../store/actions';
+import { requestCurrentTrack } from '../../store/actions/track';
 import spotifyAPI from '../../services/api/spotifyAPI';
 
 import card_default from '../../assets/card_default.jpg'
@@ -61,18 +61,15 @@ export default function Header() {
 
     return (
         <View style={styles.musicInfo}>
-
             <Image source={currentTrack.image ? { uri: currentTrack.image } : card_default} style={styles.musicImage} />
 
             <View style={styles.musicStrigs}>
-
                 <View>
                     <Text numberOfLines={1} style={styles.musicName}>{currentTrack.name}</Text>
                     <Text numberOfLines={1} style={styles.musicAuthor}>{currentTrack.artist ? currentTrack.artist.join(', ') : ''}</Text>
                 </View>
 
                 <View style={styles.musicButtons}>
-
                     <TouchableOpacity onPress={previousTrack}>
                         <MaterialIcons name="skip-previous" size={35} color={'white'} />
                     </TouchableOpacity>
@@ -84,11 +81,8 @@ export default function Header() {
                     <TouchableOpacity onPress={nextTrack}>
                         <MaterialIcons name="skip-next" size={35} color={'white'} />
                     </TouchableOpacity>
-
                 </View>
-
             </View>
-
         </View>
     );
 }
