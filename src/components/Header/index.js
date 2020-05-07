@@ -22,6 +22,10 @@ export default function Header() {
     function getCurrentTrack() {
         dispatch(requestCurrentTrack({type: 'REQUEST_CURRENT_TRACK'}));
     }
+    
+    useEffect(() => {
+        getCurrentTrack();
+    }, []);
 
     useEffect(() => {
         setTimeout(
@@ -30,33 +34,60 @@ export default function Header() {
         );
     },[currentTrack]);
 
+    function handleError(status) {
+        switch (status) {
+            case 404:
+                alert("Spotify está desconectado.");
+                break;
+            
+            case 403:
+                alert("Infelizmente o spotify disponibilza esse recurso apenas para usuários premium.");
+                break;
+        
+            default:
+                break;
+        }
+    }
+
     async function play_pause() {
         await spotifyAPI.get('/currently-playing')
             .then(async (response) => {
                 if (response) {
                     if (response.data.is_playing) {
-                        await spotifyAPI.put('/pause')
-                            .catch(err => console.error(err));
+                        try {
+                            await spotifyAPI.put('/pause');
+                        } catch (error) {
+                            handleError(error.response.status);
+                        }
                     }
                     else {
-                        await spotifyAPI.put('/play')
-                            .catch(err => console.error(err));
+                        try {
+                            await spotifyAPI.put('/play');
+                        } catch (error) {
+                            handleError(error.response.status);
+                        }
                     }
-                    getCurrentTrack()
+                    getCurrentTrack();
                 }
             });
     }
 
     async function nextTrack() {
-        await spotifyAPI.post('/next')
-            .then(getCurrentTrack)
-            .catch(err => console.error(err));
+        try {
+            await spotifyAPI.post('/next');
+        } catch (error) {
+            handleError(error.response.status);
+        }
+        getCurrentTrack();
     }
 
     async function previousTrack() {
-        await spotifyAPI.post('/previous')
-            .then(getCurrentTrack)
-            .catch(err => console.error(err));
+        try {
+            await spotifyAPI.post('/previous');
+        } catch (error) {
+            handleError(error.response.status);
+        }
+        getCurrentTrack();
     }
 
     return (

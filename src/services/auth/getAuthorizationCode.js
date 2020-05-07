@@ -1,4 +1,5 @@
 import { AuthSession } from 'expo';
+
 import credentials from '../credentials';
 
 const { spotifyCredentials } = credentials;
@@ -9,24 +10,24 @@ const scopesArr = ['user-modify-playback-state','user-read-currently-playing','u
 const scopes = scopesArr.join(' ');
 
 const getAuthorizationCode = async () => {
-  try {
-    const redirectUrl = AuthSession.getRedirectUrl();
-    const result = await AuthSession.startAsync({
-      authUrl:
-        'https://accounts.spotify.com/authorize' +
-        '?response_type=code' +
-        '&client_id=' +
-        spotifyCredentials.clientId +
-        (scopes ? '&scope=' + encodeURIComponent(scopes) : '') +
-        '&redirect_uri=' +
-        encodeURIComponent(redirectUrl),
-    })
+    try {
+        const redirectUrl = AuthSession.getRedirectUrl();
 
-    return result;
-  
-} catch (err) {
-    console.error(err)
-  }
+        const result = await AuthSession.startAsync({
+            authUrl:
+                'https://accounts.spotify.com/authorize' +
+                '?response_type=code' +
+                '&client_id=' +
+                spotifyCredentials.clientId +
+                (scopes ? '&scope=' + encodeURIComponent(scopes) : '') +
+                '&redirect_uri=' +
+                encodeURIComponent(redirectUrl),
+        })
+        return result;
+
+    } catch (err) {
+        console.error(err)
+    }
 }
 
 export default getAuthorizationCode;

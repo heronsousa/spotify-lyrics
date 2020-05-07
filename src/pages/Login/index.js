@@ -14,6 +14,8 @@ import styles from './styles';
 export default function Login({ navigation }) {
 
     async function getSpotifyConnection() {
+        await AsyncStorage.clear();
+
         const response = await getAuthorizationCode();
 
         if(response.type === "success"){
