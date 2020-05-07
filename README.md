@@ -1,4 +1,4 @@
-# SpotLyrics
+# Spotify Lyrics
 
 <div align="center">
 
