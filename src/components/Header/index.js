@@ -22,10 +22,6 @@ export default function Header() {
     function getCurrentTrack() {
         dispatch(requestCurrentTrack({type: 'REQUEST_CURRENT_TRACK'}));
     }
-    
-    useEffect(() => {
-        getCurrentTrack();
-    }, []);
 
     useEffect(() => {
         setTimeout(
@@ -43,40 +39,39 @@ export default function Header() {
             case 403:
                 alert("Infelizmente o spotify disponibilza esse recurso apenas para usuários premium.");
                 break;
-        
+
+            case "Network Error":
+                alert("Verifique sua conexão com a internet.");
+                break;
+
             default:
                 break;
         }
     }
 
     async function play_pause() {
-        await spotifyAPI.get('/currently-playing')
-            .then(async (response) => {
-                if (response) {
-                    if (response.data.is_playing) {
-                        try {
-                            await spotifyAPI.put('/pause');
-                        } catch (error) {
-                            handleError(error.response.status);
-                        }
-                    }
-                    else {
-                        try {
-                            await spotifyAPI.put('/play');
-                        } catch (error) {
-                            handleError(error.response.status);
-                        }
-                    }
-                    getCurrentTrack();
-                }
-            });
+        if (currentTrack.playButton === 'pause') {
+            try {
+                await spotifyAPI.put('/pause');
+            } catch (error) {
+                handleError(error.message==="Network Error" ? "Network Error" : error.response.status);
+            }
+        }
+        else {
+            try {
+                await spotifyAPI.put('/play');
+            } catch (error) {
+                handleError(error.message==="Network Error" ? "Network Error" : error.response.status);
+            }
+        }
+        getCurrentTrack();
     }
 
     async function nextTrack() {
         try {
             await spotifyAPI.post('/next');
         } catch (error) {
-            handleError(error.response.status);
+            handleError(error.message==="Network Error" ? "Network Error" : error.response.status);
         }
         getCurrentTrack();
     }
@@ -85,7 +80,7 @@ export default function Header() {
         try {
             await spotifyAPI.post('/previous');
         } catch (error) {
-            handleError(error.response.status);
+            handleError(error.message==="Network Error" ? "Network Error" : error.response.status);
         }
         getCurrentTrack();
     }

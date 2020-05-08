@@ -5,8 +5,7 @@ export default StyleSheet.create({
         flexDirection: 'row',
         backgroundColor: '#191414',
         padding: 15,
-        borderTopWidth: 1,
-        borderBottomColor: 'white'
+        borderTopWidth: 1
     },
 
     musicImage: {

@@ -9,8 +9,7 @@ export default StyleSheet.create({
 
     lyricsContainer: {
         flex: 1,
-        padding: 10,
-        paddingBottom: 0
+        paddingHorizontal: 10
     },
 
     lyrics: {

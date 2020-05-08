@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { 
     Text,
@@ -8,11 +8,11 @@ import {
 } from 'react-native';
 import { Linking } from 'expo';
 
-import styles from './styles';
-
 import { requestCurrentTrack } from '../../store/actions/track';
 import credentials from '../../services/credentials.js';
 import vagalumeAPI from '../../services/api/vagalumeAPI.js';
+
+import styles from './styles';
 
 export default function Lyrics() {
 
@@ -30,7 +30,7 @@ export default function Lyrics() {
             const response = await vagalumeAPI.get(`/search.php?apikey=${credentials.vagalumeAPI}&art=${currentTrack.artist[0]}&mus=${currentTrack.name}`);
 
             const type = response.data.type;
-            setLyrics(type.includes('notfound') ? 'Letra não encontrada. =(' : response.data?.mus[0]?.text);
+            setLyrics(type.includes('notfound') ? 'Letra não encontrada.' : response.data?.mus[0]?.text);
 
         } catch (err) { 
             console.log(err);
