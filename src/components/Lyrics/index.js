@@ -1,4 +1,4 @@
-import React, { useState} from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { 
     Text,
@@ -18,7 +18,8 @@ import styles from './styles';
 export default function Lyrics() {
 
     const [lyrics, setLyrics] = useState('');
-    const [refreshing, setRefreshing] = useState(false);
+
+    const scrollRef = useRef(null);
 
     const dispatch = useDispatch();
     const currentTrack = useSelector(state => state.track.data);
@@ -34,6 +35,10 @@ export default function Lyrics() {
             const type = response.data.type;
             setLyrics(type.includes('notfound') ? 'Letra não encontrada.' : response.data?.mus[0]?.text);
 
+            if (scrollRef.current) {
+                scrollRef.current.scrollTo({x: 0, y: 0, animated: true});
+            }
+
         } catch (err) { 
             console.log(err);
         }
@@ -47,12 +52,13 @@ export default function Lyrics() {
             {lyrics ?
                 <View style={styles.lyricsContainer}>
                     <ScrollView 
-                        showsVerticalScrollIndicator={false} 
+                        showsVerticalScrollIndicator={false}
+                        ref={scrollRef}
                         refreshControl={
                             <RefreshControl 
-                                progressViewOffset={40} 
-                                refreshing={false} 
-                                onRefresh={getCurrentTrack} 
+                                progressViewOffset={40}
+                                refreshing={false}
+                                onRefresh={getCurrentTrack}
                             />
                         }
                     >
