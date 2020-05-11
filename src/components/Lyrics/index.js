@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { 
     Text,
-    ScrollView, 
+    ScrollView,
+    RefreshControl,
     View, 
-    TouchableOpacity 
+    TouchableOpacity
 } from 'react-native';
 import { Linking } from 'expo';
 
@@ -17,6 +18,7 @@ import styles from './styles';
 export default function Lyrics() {
 
     const [lyrics, setLyrics] = useState('');
+    const [refreshing, setRefreshing] = useState(false);
 
     const dispatch = useDispatch();
     const currentTrack = useSelector(state => state.track.data);
@@ -44,7 +46,16 @@ export default function Lyrics() {
         <>
             {lyrics ?
                 <View style={styles.lyricsContainer}>
-                    <ScrollView showsVerticalScrollIndicator={false}>
+                    <ScrollView 
+                        showsVerticalScrollIndicator={false} 
+                        refreshControl={
+                            <RefreshControl 
+                                progressViewOffset={40} 
+                                refreshing={false} 
+                                onRefresh={getCurrentTrack} 
+                            />
+                        }
+                    >
                         <Text style={styles.lyrics}>{lyrics}</Text>
                     </ScrollView>
                 </View>

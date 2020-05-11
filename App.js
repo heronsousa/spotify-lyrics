@@ -1,6 +1,5 @@
 import React from 'react';
-import { StatusBar } from 'react-native';
-import { YellowBox } from 'react-native';
+import { StatusBar, YellowBox } from 'react-native';
 import _ from "lodash";
 
 import Routes from './src/routes';
