@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 
 import getAuthorizationCode from '../../services/auth/getAuthorizationCode';
-import icon from '../../assets/Spotify_Icon.png'
+import icon from '../../assets/spotify-lyrics-black.png'
 import styles from './styles';
 
 export default function Login({ navigation }) {

@@ -9,9 +9,10 @@ export default StyleSheet.create({
     },
 
     image: {
-        height: 80,
-        width: 80,
-        marginBottom: 50
+        resizeMode: 'contain',
+        height: 200,
+        width: 200,
+        marginBottom: 50,
     },
 
     button: {

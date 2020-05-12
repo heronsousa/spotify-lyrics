@@ -97,15 +97,15 @@ export default function Header() {
 
                 <View style={styles.musicButtons}>
                     <TouchableOpacity onPress={previousTrack}>
-                        <MaterialIcons name="skip-previous" size={35} color={'white'} />
+                        <MaterialIcons name="skip-previous" size={35} color={'#fff'} />
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={play_pause}>
-                        <MaterialIcons name={currentTrack.playButton} size={35} color={'white'} />
+                        <MaterialIcons name={currentTrack.playButton} size={35} color={'#fff'} />
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={nextTrack}>
-                        <MaterialIcons name="skip-next" size={35} color={'white'} />
+                        <MaterialIcons name="skip-next" size={35} color={'#fff'} />
                     </TouchableOpacity>
                 </View>
             </View>
