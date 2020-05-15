@@ -22,7 +22,7 @@ export default function Login({ navigation }) {
         if(response.type === "success"){
             await AsyncStorage.setItem('authorizationCode', response.params.code);
             
-            navigation.navigate('Track');
+            navigation.navigate('App');
         }
     }
 

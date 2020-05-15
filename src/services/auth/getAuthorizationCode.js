@@ -1,4 +1,4 @@
-import { AuthSession } from 'expo';
+import * as AuthSession from 'expo-auth-session';
 
 import credentials from '../credentials';
 
