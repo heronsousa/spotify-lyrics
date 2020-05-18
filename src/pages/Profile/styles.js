@@ -2,11 +2,9 @@ import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
     container: {
-        width: '100%',
-        height: '90%',
+        flex: 1,
         backgroundColor: '#fff',
         alignItems: 'center',
-        justifyContent: 'space-between',
         padding: 25
     },
 
@@ -26,6 +24,49 @@ export default StyleSheet.create({
     name: {
         fontSize: 20,
         fontWeight: 'bold',
+    },
+
+    topsTitle: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        top: 45
+    },
+
+    trackItem: {
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+
+    trackName: {
+        maxWidth: 230,
+        fontWeight: 'bold',
+        fontSize: 16
+    },
+
+    trackArtists: {
+        maxWidth: 230
+    },
+
+    trackImage: {
+        width: 230, 
+        height: 230, 
+        resizeMode: 'contain'
+    },
+
+    pagination: {
+        flexDirection: 'row',
+        position: 'absolute',
+        top: '90%'
+    },
+
+    paginText: {
+        fontSize: 20,
+    },
+
+    paginActiveText: {
+        color: '#999',
+        fontSize: 20
     },
 
     button: {
