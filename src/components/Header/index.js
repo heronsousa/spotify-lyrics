@@ -52,14 +52,14 @@ export default function Header() {
     async function play_pause() {
         if (currentTrack.playButton === 'pause') {
             try {
-                await spotifyAPI.put('/pause');
+                await spotifyAPI.put('player/pause');
             } catch (error) {
                 handleError(error.message==="Network Error" ? "Network Error" : error.response.status);
             }
         }
         else {
             try {
-                await spotifyAPI.put('/play');
+                await spotifyAPI.put('player/play');
             } catch (error) {
                 handleError(error.message==="Network Error" ? "Network Error" : error.response.status);
             }
@@ -69,7 +69,7 @@ export default function Header() {
 
     async function nextTrack() {
         try {
-            await spotifyAPI.post('/next');
+            await spotifyAPI.post('player/next');
         } catch (error) {
             handleError(error.message==="Network Error" ? "Network Error" : error.response.status);
         }
@@ -78,7 +78,7 @@ export default function Header() {
 
     async function previousTrack() {
         try {
-            await spotifyAPI.post('/previous');
+            await spotifyAPI.post('player/previous');
         } catch (error) {
             handleError(error.message==="Network Error" ? "Network Error" : error.response.status);
         }

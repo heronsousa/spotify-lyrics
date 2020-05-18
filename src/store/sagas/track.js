@@ -4,7 +4,7 @@ import spotifyAPI from '../../services/api/spotifyAPI';
 
 export function* getCurrentTrack() {
     try {
-        const currentTrack = yield call(spotifyAPI.get, '/currently-playing');
+        const currentTrack = yield call(spotifyAPI.get, 'player/currently-playing');
 
         const artist = currentTrack.data?.item?.artists.map(artist => artist.name);
         const playButton = currentTrack.data.is_playing ? 'pause' : 'play-arrow';
