@@ -1,82 +1,107 @@
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
-    container: {
+    background: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: '#191414',
         alignItems: 'center',
-        padding: 25
+        paddingHorizontal: 15
     },
 
-    userInfo: {
+    container: {
         alignItems: 'center',
+        justifyContent: 'space-between',
+        padding: 15,
+        paddingTop: 40,
+        backgroundColor: 'white',
+        borderRadius: 15,
+        height: '85%',
+        width: '100%',
+        top: '10%',
     },
 
     image: {
-        height: 100,
-        width: 100,
+        height: 70,
+        width: 70,
         borderWidth: 2,
-        borderColor: 'black',
+        borderColor: 'white',
         borderRadius: 50,
-        marginBottom: 15
+        position: 'absolute',
+        top: '5%',
     },
 
     name: {
-        fontSize: 20,
+        fontSize: 18,
         fontWeight: 'bold',
+        color: '#191414'
+    },
+
+    topsTracks: {
+        justifyContent: "center",
+        alignItems: 'center',
+        height: '62%'
     },
 
     topsTitle: {
+        color: '#191414',
         fontSize: 16,
         fontWeight: 'bold',
         textAlign: 'center',
-        top: 45
     },
 
     trackItem: {
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        width: 220
     },
 
     trackName: {
-        maxWidth: 230,
+        maxWidth: 220,
         fontWeight: 'bold',
-        fontSize: 16
+        fontSize: 16,
+        textAlign: 'center',
+        color: '#191414',
     },
 
     trackArtists: {
-        maxWidth: 230
+        maxWidth: 220,
+        textAlign: 'center',
+        color: '#191414',
     },
 
     trackImage: {
-        width: 230, 
-        height: 230, 
-        resizeMode: 'contain'
+        resizeMode: 'contain',
+        width: 130,
+        height: 140,
+        borderWidth: 1,
+        borderColor: '#191414',
+        marginBottom: 10
     },
 
     pagination: {
         flexDirection: 'row',
-        position: 'absolute',
-        top: '90%'
     },
 
     paginText: {
         fontSize: 20,
+        color: '#999',
     },
 
     paginActiveText: {
-        color: '#999',
+        color: '#191414',
         fontSize: 20
     },
 
     button: {
         borderWidth: 2,
         borderRadius: 30,
-        paddingHorizontal: 15
+        paddingHorizontal: 15,
+        borderColor: '#191414'
     },
 
     buttonText: {
         fontSize: 15,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        color: '#191414'
     }
 });
