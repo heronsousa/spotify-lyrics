@@ -1,5 +1,5 @@
 <h1 align="center">
-    <img alt="Logo Spotify Lyrics" width=200 src="assets/logo.png"/>
+    <img alt="Logo Spotify Lyrics" width=400 src="assets/logo.png"/>
 </h1>
 
 <p align='center'>
@@ -11,11 +11,18 @@
     </a>
 </p>
 
-## 📱 Demo
+
+## 📌 Demo
+
+<div align="center" width=300>
+
+![SpotLyricsGif](assets/20200212_162244.gif)
+
+</div>
 
 You can try it using [Expo Snack](https://expo.io/@heron/spotify-lyrics).
 
-##  Project
+## 📱 Project
 
 Spotify Lyrics is an android app that fetches the lyrics of the currently playing Spotify song. 
 
