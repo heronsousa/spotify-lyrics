@@ -11,7 +11,6 @@
     </a>
 </p>
 
-
 ## 📌 Demo
 
 <div align="center" width=300>
@@ -24,7 +23,7 @@ You can try it using [Expo Snack](https://expo.io/@heron/spotify-lyrics).
 
 ## 📱 Project
 
-Spotify Lyrics is an android app that fetches the lyrics of the currently playing Spotify song. 
+Spotify Lyrics is an android app that fetches the lyrics of the currently playing Spotify song. Application developed for the purpose of studying and practice some concepts, any advice or suggestions will be much appreciated and welcomed.
 
 ## 👨‍💻 Technologies
 
