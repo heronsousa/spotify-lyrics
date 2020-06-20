@@ -21,7 +21,8 @@ const getAuthorizationCode = async () => {
                 spotifyCredentials.clientId +
                 (scopes ? '&scope=' + encodeURIComponent(scopes) : '') +
                 '&redirect_uri=' +
-                encodeURIComponent(redirectUrl),
+                encodeURIComponent(redirectUrl) +
+                '&show_dialog=true',
         })
         return result;
 
