@@ -39,7 +39,7 @@ export default StyleSheet.create({
     topsTracks: {
         justifyContent: "center",
         alignItems: 'center',
-        height: '62%'
+        height: '52%'
     },
 
     topsTitle: {
@@ -58,7 +58,7 @@ export default StyleSheet.create({
     trackName: {
         maxWidth: 220,
         fontWeight: 'bold',
-        fontSize: 16,
+        fontSize: 14,
         textAlign: 'center',
         color: '#191414',
     },
@@ -80,16 +80,17 @@ export default StyleSheet.create({
 
     pagination: {
         flexDirection: 'row',
+        marginTop: -30
     },
 
     paginText: {
-        fontSize: 20,
+        fontSize: 11,
         color: '#999',
     },
 
     paginActiveText: {
         color: '#191414',
-        fontSize: 20
+        fontSize: 11
     },
 
     button: {

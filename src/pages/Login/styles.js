@@ -16,13 +16,12 @@ export default StyleSheet.create({
     },
 
     button: {
-        height: 50,
-        width: 280,
         borderWidth: 3,
         borderColor: '#191414',
         justifyContent: 'center',
         alignItems: 'center',
-        borderRadius: 25
+        borderRadius: 25,
+        padding: 10
     },
 
     buttonText: {

@@ -15,7 +15,7 @@
 
 <div align="center" width=300>
 
-![SpotLyricsGif](assets/20200212_162244.gif)
+![SpotLyricsGif](assets/spotify-lyrics.gif)
 
 </div>
 
