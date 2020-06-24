@@ -39,7 +39,7 @@ export default StyleSheet.create({
     topsTracks: {
         justifyContent: "center",
         alignItems: 'center',
-        height: '52%'
+        height: '62%'
     },
 
     topsTitle: {
@@ -80,17 +80,17 @@ export default StyleSheet.create({
 
     pagination: {
         flexDirection: 'row',
-        marginTop: -30
+        marginTop: -40
     },
 
     paginText: {
-        fontSize: 11,
+        fontSize: 17,
         color: '#999',
     },
 
     paginActiveText: {
         color: '#191414',
-        fontSize: 11
+        fontSize: 17
     },
 
     button: {

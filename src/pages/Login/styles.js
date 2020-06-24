@@ -1,32 +1,32 @@
 import { StyleSheet } from 'react-native';
+import styled from 'styled-components';
+
+export const Container = styled.View`
+    flex: 1;
+    background-color: #fff;
+    align-items: center;
+    justify-content: center;
+`
+
+export const Button = styled.TouchableOpacity`
+    border-width: 3px;
+    border-color: #191414;
+    align-items: center;
+    border-radius: 25px;
+    padding: 10px;
+`
+
+export const ButtonText = styled.Text`
+    color: #191414;
+    font-size: 16px;
+    font-weight: bold;
+`
 
 export default StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-
     image: {
         resizeMode: 'contain',
         height: 10,
         width: 10,
         marginBottom: 120
-    },
-
-    button: {
-        borderWidth: 3,
-        borderColor: '#191414',
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 25,
-        padding: 10
-    },
-
-    buttonText: {
-        color: '#191414',
-        fontSize: 16,
-        fontWeight: 'bold'
     }
 });

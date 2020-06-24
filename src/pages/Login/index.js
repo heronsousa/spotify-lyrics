@@ -1,16 +1,10 @@
 import React from 'react';
-import { 
-    TouchableOpacity,
-    View,
-    Text,
-    AsyncStorage,
-    Animated,
-    Easing
-} from 'react-native';
+import { AsyncStorage, Animated, Easing } from 'react-native';
 
 import getAuthorizationCode from '../../services/auth/getAuthorizationCode';
+
+import styles, { Container, Button, ButtonText } from './styles';
 import icon from '../../assets/spotify-lyrics-black.png'
-import styles from './styles';
 
 export default function Login({ navigation }) {
 
@@ -42,7 +36,7 @@ export default function Login({ navigation }) {
     }).start();
 
     return (
-        <View style={styles.container}>
+        <Container>
             <Animated.Image
                 source={icon}
                 resizeMode='cover'
@@ -65,12 +59,12 @@ export default function Login({ navigation }) {
                 }
             />
             <Animated.View style = {{opacity: opacity}} >
-                <TouchableOpacity onPress={getSpotifyConnection} style={styles.button}>
-                    <Text style={styles.buttonText}>CONECTAR COM O SPOTIFY</Text>
-                </TouchableOpacity>
+                <Button onPress={getSpotifyConnection}>
+                    <ButtonText>CONECTAR COM O SPOTIFY</ButtonText>
+                </Button>
             </Animated.View>
 
-        </View>
+        </Container>
     );
 }
 
