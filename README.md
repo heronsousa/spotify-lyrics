@@ -35,3 +35,19 @@ This project was developed with the following technologies:
 - [Redux-Saga](https://redux-saga.js.org/)
 - [Axios](https://github.com/axios/axios)
 - [React Navigation](https://reactnavigation.org/)
+
+## 🚀 How to use
+
+```bash
+# Clone this repository
+$ git clone https://github.com/heronsousa/spotify-lyrics.git
+
+# Go into the repository
+$ cd spotify-lyrics
+
+# Install dependencies
+$ yarn install
+
+# Run the app
+$ expo start
+```
