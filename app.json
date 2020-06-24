@@ -1,8 +1,9 @@
 {
   "expo": {
-    "name": "spotify-lyrics",
+    "name": "Spotify Lyrics",
     "slug": "spotify-lyrics",
     "scheme": "spotify-lyrics" ,
+    "description": "Spotify Lyrics is an android app that fetches the lyrics of the currently playing Spotify song. Application developed for the purpose of studying and practice some concepts, any advice or suggestions will be much appreciated and welcomed.",
     "privacy": "public",
     "sdkVersion": "36.0.0",
     "platforms": [
