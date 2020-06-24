@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import {
     Text,
     View,
-    Image,
     TouchableOpacity,
     AsyncStorage,
     ScrollView
@@ -11,7 +10,21 @@ import {
 import spotifyAPI from '../../services/api/spotifyAPI';
 
 import user_icon from '../../assets/user_default.png';
-import styles from './styles';
+import styles, { 
+    Background, 
+    Container, 
+    Image, 
+    Name, 
+    TopTracks, 
+    TopsTitle, 
+    TrackItem,
+    TrackName,
+    TrackArtists,
+    TrackImage,
+    Pagination,
+    Button,
+    ButtonText
+} from './styles';
 
 function Profile({ navigation }) {
 
@@ -78,13 +91,12 @@ function Profile({ navigation }) {
     }
 
     return ( 
-        <View style={styles.background}>
-            
-            <View style={styles.container}>
-                <Text style={styles.name}>{name.toUpperCase()}</Text>
+        <Background>
+            <Container>
+                <Name>{name.toUpperCase()}</Name>
 
-                <View style={styles.topsTracks}>
-                    <Text style={styles.topsTitle}>MÚSICAS QUE VOCÊ MAIS TEM ESCUTADO:</Text>
+                <TopTracks>
+                    <TopsTitle>MÚSICAS QUE VOCÊ MAIS TEM ESCUTADO:</TopsTitle>
 
                     <ScrollView
                         horizontal
@@ -93,31 +105,29 @@ function Profile({ navigation }) {
                         showsHorizontalScrollIndicator={false}
                     >
                         {tracks.map(track => (
-                            <View key={track.id} style={styles.trackItem}>
-                                <Image source={{uri: track.image}} style={styles.trackImage}/>
-                                <Text style={styles.trackName}>{track.name}</Text>
-                                <Text style={styles.trackArtists}>{track.artists ? track.artists.join(', ') : ''}</Text>
-                            </View>
+                            <TrackItem key={track.id}>
+                                <TrackImage style={{resizeMode: 'contain', height: 140, width: 130}} source={{uri: track.image}}/>
+                            </TrackItem>
                         ))}
                     </ScrollView>
                     
-                    <View style={styles.pagination}>
+                    <Pagination>
                         {tracks.map(track => (
                             <Text 
                                 key={track.id} 
                                 style={track.id==active ? styles.paginActiveText : styles.paginText}
                             >●</Text>
                         ))}
-                    </View>
-                </View>
+                    </Pagination>
+                </TopTracks>
                 
-                <TouchableOpacity onPress={logout} style={styles.button}>
-                    <Text style={styles.buttonText}>SAIR</Text>
-                </TouchableOpacity>
-            </View>
+                <Button onPress={logout}>
+                    <ButtonText>SAIR</ButtonText>
+                </Button>
+            </Container>
             
-            <Image style={styles.image} source={image ? {uri: image} : user_icon} />
-        </View>
+            <Image source={image ? {uri: image} : user_icon} />
+        </Background>
     );
 }
 
