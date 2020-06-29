@@ -1,40 +1,38 @@
-import { StyleSheet } from 'react-native';
+import styled from 'styled-components';
 
-export default StyleSheet.create({
-    musicInfo: {
-        flexDirection: 'row',
-        backgroundColor: '#191414',
-        padding: 15,
-        borderTopWidth: 1
-    },
+export const Container = styled.View`
+    flex-direction: row;
+    background-color: #191414;
+    border-top-width: 1px;
+    padding: 15px;
+`
 
-    musicImage: {
-        width: 100,
-        height: 100,
-        borderWidth: 2,
-        borderColor: '#fff'
-    },
+export const Image = styled.Image`
+    width: 100px;
+    height: 100px;
+    border-width: 2px;
+    border-color: #fff;
+`
 
-    musicStrigs: {
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-        marginLeft: 10,
-        flex: 1
-    },
+export const MusicInfo = styled.View`
+    flex-direction: column;
+    justify-content: space-between;
+    margin-left: 10px;
+    flex: 1;
+`
 
-    musicName: {
-        fontSize: 16,
-        fontWeight: 'bold',
-        color: '#fff'
-    },
+export const ButtonsContainer = styled.View`
+    flex-direction: row;
+    justify-content: space-between;
+`
 
-    musicAuthor: {
-        fontSize: 14,
-        color: '#fff'
-    },
+export const MusicName = styled.Text`
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff
+`
 
-    musicButtons: {
-        flexDirection: 'row',
-        justifyContent: 'space-between'
-    }
-});
+export const MusicArtists = styled.Text`
+    font-size: 14px;
+    color: #fff
+`

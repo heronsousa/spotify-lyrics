@@ -1,10 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { 
-    Text,
-    TouchableOpacity, 
-    View,
-    Image 
+    TouchableOpacity
 } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 
@@ -12,7 +9,14 @@ import { requestCurrentTrack } from '../../store/actions/track';
 import spotifyAPI from '../../services/api/spotifyAPI';
 
 import card_default from '../../assets/card_default.jpg'
-import styles from './styles';
+import {
+    Container,
+    Image,
+    MusicInfo,
+    ButtonsContainer,
+    MusicName,
+    MusicArtists
+} from './styles';
 
 export default function Header() {
     
@@ -86,16 +90,16 @@ export default function Header() {
     }
 
     return (
-        <View style={styles.musicInfo}>
-            <Image source={currentTrack.image ? { uri: currentTrack.image } : card_default} style={styles.musicImage} />
+        <Container>
+            <Image source={currentTrack.image ? { uri: currentTrack.image } : card_default} />
 
-            <View style={styles.musicStrigs}>
-                <View>
-                    <Text numberOfLines={1} style={styles.musicName}>{currentTrack.name}</Text>
-                    <Text numberOfLines={1} style={styles.musicAuthor}>{currentTrack.artist ? currentTrack.artist.join(', ') : ''}</Text>
-                </View>
+            <MusicInfo>
+                <>
+                    <MusicName numberOfLines={1}>{currentTrack.name}</MusicName>
+                    <MusicArtists numberOfLines={1}>{currentTrack.artist ? currentTrack.artist.join(', ') : ''}</MusicArtists>
+                </>
 
-                <View style={styles.musicButtons}>
+                <ButtonsContainer>
                     <TouchableOpacity onPress={previousTrack}>
                         <MaterialIcons name="skip-previous" size={35} color={'#fff'} />
                     </TouchableOpacity>
@@ -107,8 +111,8 @@ export default function Header() {
                     <TouchableOpacity onPress={nextTrack}>
                         <MaterialIcons name="skip-next" size={35} color={'#fff'} />
                     </TouchableOpacity>
-                </View>
-            </View>
-        </View>
+                </ButtonsContainer>
+            </MusicInfo>
+        </Container>
     );
 }
