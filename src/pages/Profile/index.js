@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import {
-    Text,
-    View,
-    TouchableOpacity,
     AsyncStorage,
     ScrollView
 } from 'react-native';
@@ -10,7 +7,7 @@ import {
 import spotifyAPI from '../../services/api/spotifyAPI';
 
 import user_icon from '../../assets/user_default.png';
-import styles, { 
+import { 
     Background, 
     Container, 
     Image, 
@@ -23,7 +20,9 @@ import styles, {
     TrackImage,
     Pagination,
     Button,
-    ButtonText
+    ButtonText,
+    PaginationActiveBall,
+    PaginationBall
 } from './styles';
 
 function Profile({ navigation }) {
@@ -106,17 +105,18 @@ function Profile({ navigation }) {
                     >
                         {tracks.map(track => (
                             <TrackItem key={track.id}>
-                                <TrackImage style={{resizeMode: 'contain', height: 140, width: 130}} source={{uri: track.image}}/>
+                                <TrackImage source={{uri: track.image}}/>
+                                <TrackName>{track.name}</TrackName>
+                                <TrackArtists>{track.artists ? track.artists.join(', ') : ''}</TrackArtists>
                             </TrackItem>
                         ))}
                     </ScrollView>
                     
                     <Pagination>
                         {tracks.map(track => (
-                            <Text 
-                                key={track.id} 
-                                style={track.id==active ? styles.paginActiveText : styles.paginText}
-                            >●</Text>
+                            track.id==active ? 
+                                <PaginationActiveBall key={track.id}>●</PaginationActiveBall> :
+                                <PaginationBall key={track.id}>●</PaginationBall>
                         ))}
                     </Pagination>
                 </TopTracks>

@@ -52,7 +52,7 @@ export const TopsTitle = styled.Text`
 export const TrackItem = styled.View`
     justify-content: center;
     align-items: center;
-    width: 20px;
+    width: 220px;
 `
 
 export const TrackName = styled.Text`
@@ -104,15 +104,3 @@ export const ButtonText = styled.Text`
     font-weight: bold;
     color: #191414;
 `
-
-export default StyleSheet.create({
-    paginText: {
-        fontSize: 11,
-        color: '#999',
-    },
-
-    paginActiveText: {
-        color: '#191414',
-        fontSize: 11
-    }
-});
