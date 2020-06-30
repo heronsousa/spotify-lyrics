@@ -14,7 +14,7 @@ export const Image = styled.Image`
     border-color: #fff;
 `
 
-export const MusicInfo = styled.View`
+export const Music = styled.View`
     flex-direction: column;
     justify-content: space-between;
     margin-left: 10px;

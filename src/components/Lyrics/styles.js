@@ -1,33 +1,32 @@
 import { StyleSheet } from 'react-native';
+import styled from 'styled-components';
 
-export default StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
+export const Container = styled.View`
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+`
 
-    lyricsContainer: {
-        flex: 1,
-        paddingHorizontal: 10
-    },
+export const LyricsContainer = styled.View`
+    flex: 1;
+    padding: 0 15px;
+`
 
-    lyrics: {
-        fontSize: 16 
-    },
+export const Letter = styled.Text`
+    font-size: 16px;
+`
 
-    button: {
-        borderWidth: 3,
-        borderColor: '#191414',
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 25,
-        padding: 8
-    },
+export const Button = styled.TouchableOpacity`
+    justify-content: center;
+    align-items: center;
+    border-width: 3px;
+    border-color: #191414;
+    border-radius: 25px;
+    padding: 8px;
+`
 
-    buttonText: {
-        color: '#191414',
-        fontSize: 16,
-        fontWeight: 'bold'
-    }
-});
+export const ButtonText = styled.Text`
+    color: #191414;
+    font-size: 16px;
+    font-weight: bold;
+`

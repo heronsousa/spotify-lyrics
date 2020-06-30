@@ -13,7 +13,13 @@ import { requestCurrentTrack } from '../../store/actions/track';
 import credentials from '../../services/credentials.js';
 import vagalumeAPI from '../../services/api/vagalumeAPI.js';
 
-import styles from './styles';
+import styles, {
+    LyricsContainer,
+    Container,
+    Letter,
+    Button,
+    ButtonText
+} from './styles';
 
 export default function Lyrics() {
 
@@ -50,7 +56,7 @@ export default function Lyrics() {
     return (
         <>
             {lyrics ?
-                <View style={styles.lyricsContainer}>
+                <LyricsContainer>
                     <ScrollView 
                         showsVerticalScrollIndicator={false}
                         ref={scrollRef}
@@ -62,22 +68,21 @@ export default function Lyrics() {
                             />
                         }
                     >
-                        <Text style={styles.lyrics}>{lyrics}</Text>
+                        <Letter>{lyrics}</Letter>
                     </ScrollView>
-                </View>
+                </LyricsContainer>
              : 
-                <View style={styles.container}>
-                    <TouchableOpacity 
-                        style={styles.button} 
+                <Container>
+                    <Button
                         onPress={() => (
                             Linking.openURL('spotify:'),
                             setTimeout(() => { getCurrentTrack() }, 1)
                             )
                         }
                     >
-                        <Text style={styles.buttonText}>ENTRAR NO SPOTIFY</Text>
-                    </TouchableOpacity>
-                </View> 
+                        <ButtonText>ENTRAR NO SPOTIFY</ButtonText>
+                    </Button>
+                </Container> 
             }
         </>
   );

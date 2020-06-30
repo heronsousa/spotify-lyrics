@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { 
-    TouchableOpacity
+    TouchableOpacity,
+    View
 } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 
@@ -12,7 +13,7 @@ import card_default from '../../assets/card_default.jpg'
 import {
     Container,
     Image,
-    MusicInfo,
+    Music,
     ButtonsContainer,
     MusicName,
     MusicArtists
@@ -93,11 +94,11 @@ export default function Header() {
         <Container>
             <Image source={currentTrack.image ? { uri: currentTrack.image } : card_default} />
 
-            <MusicInfo>
-                <>
+            <Music>
+                <View>
                     <MusicName numberOfLines={1}>{currentTrack.name}</MusicName>
                     <MusicArtists numberOfLines={1}>{currentTrack.artist ? currentTrack.artist.join(', ') : ''}</MusicArtists>
-                </>
+                </View>
 
                 <ButtonsContainer>
                     <TouchableOpacity onPress={previousTrack}>
@@ -112,7 +113,7 @@ export default function Header() {
                         <MaterialIcons name="skip-next" size={35} color={'#fff'} />
                     </TouchableOpacity>
                 </ButtonsContainer>
-            </MusicInfo>
+            </Music>
         </Container>
     );
 }
