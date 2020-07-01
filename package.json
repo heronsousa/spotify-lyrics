@@ -28,7 +28,7 @@
     "react-native-gesture-handler": "~1.6.0",
     "react-native-reanimated": "~1.7.0",
     "react-native-safe-area-context": "3.0.7",
-    "react-native-screens": "~2.2.0",
+    "react-native-screens": "~2.9.0",
     "react-native-web": "~0.13.1",
     "react-navigation": "^4.3.9",
     "react-navigation-drawer": "^2.4.13",
