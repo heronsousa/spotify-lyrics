@@ -17,7 +17,7 @@
     "axios": "^0.19.2",
     "base-64": "^0.1.0",
     "customize-cra": "^0.9.1",
-    "expo": "~37.0.11",
+    "expo": "~38.0.8",
     "expo-auth-session": "^1.2.1",
     "mem": "~6.1.0",
     "minimist": "^1.2.3",
