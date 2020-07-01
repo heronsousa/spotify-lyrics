@@ -35,6 +35,7 @@ This project was developed with the following technologies:
 - [Redux-Saga](https://redux-saga.js.org/)
 - [Axios](https://github.com/axios/axios)
 - [React Navigation](https://reactnavigation.org/)
+- [Styled Components](https://styled-components.com/)
 
 ## 🚀 How to use
 
