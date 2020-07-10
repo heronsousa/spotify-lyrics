@@ -38,7 +38,7 @@ function Profile({ navigation }) {
                 const response = await spotifyAPI.get();
                 
                 setName(response.data.display_name);
-                setImage(response.data.images[0].url ? response.data.images[0].url : '');
+                setImage(response.data?.images[0]?.url ? response.data?.images[0]?.url : '');
             } catch (error) {
                 console.log(error)
             }
