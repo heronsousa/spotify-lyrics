@@ -13,7 +13,7 @@
     "@babel/plugin-proposal-optional-chaining": "^7.10.4",
     "@react-native-community/masked-view": "0.1.10",
     "@react-navigation/drawer": "^5.8.4",
-    "@react-navigation/native": "^5.5.0",
+    "@react-navigation/native": "^5.7.1",
     "axios": "^0.19.2",
     "base-64": "^0.1.0",
     "customize-cra": "^0.9.1",
