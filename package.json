@@ -16,7 +16,7 @@
     "@react-navigation/native": "^5.7.3",
     "axios": "^0.19.2",
     "base-64": "^0.1.0",
-    "customize-cra": "^0.9.1",
+    "customize-cra": "^1.0.0",
     "expo": "~38.0.8",
     "expo-auth-session": "^1.2.1",
     "logkitty": "^0.7.1",
